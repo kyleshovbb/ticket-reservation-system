@@ -1,5 +1,5 @@
 {
-  "name": "plane-ticket-reservation-system",
+  "name": "ticket-reservation",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
