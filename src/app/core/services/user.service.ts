@@ -7,7 +7,7 @@ import { AuthService, LoginRequest } from "./auth.service";
 @Injectable({ providedIn: "root" })
 export class UserService {
   private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
-  public isAuthenticated = this.isAuthenticatedSubject.asObservable();
+  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   constructor(private auth: AuthService) {}
 

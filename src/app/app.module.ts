@@ -9,8 +9,8 @@ import { FakeBackendInterceptor } from "./core/fake-backend/fake-backend.interce
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, LayoutModule, HttpClientModule],
   bootstrap: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, LayoutModule, HttpClientModule],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
