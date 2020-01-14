@@ -1,20 +1,9 @@
-<ng-container *ngIf="isOpen$ | async">
-  <div class="auth-modal">
-    <div class="auth-modal__modal">
-      <div class="auth-modal__change-auth-type-btn-container">
-        <button class="btn auth-modal__btn">Login</button>
-        <button class="btn auth-modal__btn">Registration</button>
-      </div>
-
-      <div
-        class="auth-modal__form-container"
-        [ngSwitch]="authModalType$ | async"
-      >
-        <app-login *ngSwitchCase="'login'"></app-login>
-        <app-registration *ngSwitchCase="'registration'"></app-registration>
-      </div>
-    </div>
+<div class="auth-modal" *ngIf="isOpen$ | async">
+  <div class="auth-modal__body" [ngSwitch]="authModalType$ | async">
+    <a class="auth-modal__close" (click)="onClose()">X</a>
+    <app-login *ngSwitchCase="'login'"></app-login>
+    <app-registration *ngSwitchCase="'registration'"></app-registration>
   </div>
 
-  <div class="auth__overlay" (click)="onClose()"></div>
-</ng-container>
+  <div class="auth-modal__overlay" (click)="onClose()"></div>
+</div>

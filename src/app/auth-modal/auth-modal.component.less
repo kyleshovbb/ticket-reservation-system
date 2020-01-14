@@ -1,0 +1,45 @@
+.auth-modal {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  &__body {
+    z-index: 11;
+    position: absolute;
+    background: white;
+    padding: 30px;
+    top: 25%;
+    border-radius: 5px;
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9;
+    opacity: 0.7;
+    background-color: #404156;
+  }
+
+  &__close {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -12px;
+    right: -12px;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #edf2f6;
+    border-radius: 50%;
+    background-color: white;
+    cursor: pointer;
+  }
+}

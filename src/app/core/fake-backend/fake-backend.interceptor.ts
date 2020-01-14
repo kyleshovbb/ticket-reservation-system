@@ -27,6 +27,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return this.fakeBackend.logout();
       case url.endsWith("login") && method === "POST":
         return this.fakeBackend.login(body);
+      case url.endsWith("register") && method === "POST":
+        return this.fakeBackend.register(body);
       default:
         return next.handle(req);
     }

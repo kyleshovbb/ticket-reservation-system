@@ -1,8 +1,12 @@
-import { Component, ChangeDetectionStrategy } from "@angular/core";
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ViewEncapsulation
+} from "@angular/core";
 import { Observable } from "rxjs";
 
-import { AuthService } from "./auth-modal.service";
 import { AuthModalType } from "./auth-modal.model";
+import { AuthModalService } from "./auth-modal.service";
 
 @Component({
   selector: "app-auth-modal",
@@ -14,12 +18,12 @@ export class AuthComponent {
   public isOpen$: Observable<boolean>;
   public authModalType$: Observable<AuthModalType>;
 
-  constructor(private authService: AuthService) {
-    this.isOpen$ = this.authService.isOpen$;
-    this.authModalType$ = this.authService.authModalType$;
+  constructor(private authModalService: AuthModalService) {
+    this.isOpen$ = this.authModalService.isOpen$;
+    this.authModalType$ = this.authModalService.authModalType$;
   }
 
   public onClose() {
-    this.authService.close();
+    this.authModalService.close();
   }
 }

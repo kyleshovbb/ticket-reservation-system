@@ -6,12 +6,22 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface RegistrationRequest {
+  email: string;
+  username: string;
+  password: string;
+}
+
 @Injectable({ providedIn: "root" })
 export class AuthService {
   constructor(private http: HttpClient) {}
 
   public login(body: LoginRequest) {
     return this.http.post("login", body);
+  }
+
+  public register(body: RegistrationRequest) {
+    return this.http.post("register", body);
   }
 
   public logout() {

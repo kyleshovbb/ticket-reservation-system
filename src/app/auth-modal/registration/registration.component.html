@@ -1,1 +1,31 @@
-<div>Registration</div>
+<div class="register">
+  <h2 class="register__title">Register</h2>
+  <form
+    class="register__form"
+    (submit)="onSubmit($event)"
+    [formGroup]="registrationForm"
+  >
+    <app-input
+      class="register__input"
+      placeholder="Email"
+      formControlName="email"
+    ></app-input>
+    <app-input
+      class="register__input"
+      placeholder="Username"
+      formControlName="username"
+    ></app-input>
+    <app-input
+      class="register__input"
+      placeholder="Password"
+      formControlName="password"
+    ></app-input>
+    <button
+      class="btn btn-primary register__btn"
+      type="submit"
+      [disabled]="registrationForm.invalid"
+    >
+      Register
+    </button>
+  </form>
+</div>

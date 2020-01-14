@@ -1,0 +1,9 @@
+<div class="input">
+  <input
+    class="input__field"
+    [ngClass]="{ input__error: !!error }"
+    [placeholder]="placeholder"
+    (change)="onChange($event.target.value)"
+  />
+  <div class="input__error-tip">{{ error }}</div>
+</div>

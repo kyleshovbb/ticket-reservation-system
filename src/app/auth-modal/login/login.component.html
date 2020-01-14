@@ -1,1 +1,24 @@
-<div>Login</div>
+<div class="login">
+  <h2 class="login__title">Login</h2>
+  <form class="login__form" (submit)="onSubmit($event)" [formGroup]="loginForm">
+    <app-input
+      class="login__input"
+      placeholder="Username"
+      formControlName="username"
+    ></app-input>
+    <app-input
+      class="login__input"
+      placeholder="Password"
+      formControlName="password"
+    ></app-input>
+    <button
+      class="btn btn-primary login__btn"
+      type="submit"
+      [disabled]="loginForm.invalid"
+    >
+      Login
+    </button>
+  </form>
+
+  <div class="login__server-error" *ngIf="serverError">{{ serverError }}</div>
+</div>

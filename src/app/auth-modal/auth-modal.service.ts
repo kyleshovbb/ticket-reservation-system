@@ -4,7 +4,7 @@ import { ReplaySubject, BehaviorSubject } from "rxjs";
 import { AuthModalType } from "./auth-modal.model";
 
 @Injectable()
-export class AuthService {
+export class AuthModalService {
   private isOpenSubject = new ReplaySubject<boolean>(1);
   public isOpen$ = this.isOpenSubject.asObservable();
 
