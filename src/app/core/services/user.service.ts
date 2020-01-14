@@ -30,8 +30,7 @@ export class UserService {
       first(),
       tap(() => {
         this.isAuthenticatedSubject.next(true);
-      }),
-      catchError(() => of({}))
+      })
     );
   }
 
