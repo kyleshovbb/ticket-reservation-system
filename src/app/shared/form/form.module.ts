@@ -1,5 +1,5 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 import { InputComponent } from "./input/input.component";
 import { ValidatorService } from "./validator.service";

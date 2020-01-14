@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-
-import { AuthService } from "src/app/core/services/auth.service";
-import { AuthModalService } from "../auth-modal.service";
-import { catchError, tap } from "rxjs/operators";
 import { of } from "rxjs";
+import { catchError, tap } from "rxjs/operators";
+
+import { UserService } from "src/app/core/services/user.service";
+
+import { AuthModalService } from "../auth-modal.service";
 
 @Component({
   selector: "app-login",
@@ -17,7 +18,7 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
+    private userService: UserService,
     private authModalService: AuthModalService
   ) {
     this.loginForm = this.fb.group({
@@ -27,7 +28,7 @@ export class LoginComponent {
   }
 
   public onSubmit() {
-    return this.authService
+    return this.userService
       .login(this.loginForm.value)
       .pipe(
         tap(() => {

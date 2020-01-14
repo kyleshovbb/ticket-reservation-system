@@ -24,4 +24,8 @@ export class HeaderComponent {
   public openAuthModal(authType: AuthModalType) {
     this.authModalService.open(authType);
   }
+
+  public logout() {
+    return this.user.logout().subscribe();
+  }
 }

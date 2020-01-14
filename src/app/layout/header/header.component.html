@@ -8,7 +8,9 @@
       class="header__user-actions"
       *ngIf="isUserAuthenticated$ | async; else noAuth"
     >
-      <button class="header__logout-btn header__btn">Logout</button>
+      <button class="header__logout-btn header__btn" (click)="logout()">
+        Logout
+      </button>
     </div>
   </div>
 
