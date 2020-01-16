@@ -1,0 +1,10 @@
+<div class="radio" [class.radio_checked]="isChecked" (click)="onClick()">
+  <div class="radio__button">
+    <div class="radio__button-outer"></div>
+    <div class="radio__button-inter" *ngIf="isChecked"></div>
+  </div>
+
+  <div class="radio__label">
+    {{ label }}
+  </div>
+</div>

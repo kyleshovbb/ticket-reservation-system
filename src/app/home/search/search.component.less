@@ -1,0 +1,27 @@
+@import "../../../style/theme.less";
+
+.search {
+  width: 100%;
+  padding: 20px;
+  border-radius: 3px;
+  background-color: @background-color;
+  box-sizing: border-box;
+
+  &__form {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  app-input {
+    margin-right: 20px;
+
+    &.search__date-picker {
+    }
+
+    .input__field {
+      color: @white;
+      background-color: @background-fade-color;
+    }
+  }
+}
