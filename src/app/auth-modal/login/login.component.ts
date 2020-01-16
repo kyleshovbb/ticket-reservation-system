@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { of, Subscription } from "rxjs";
-import { catchError, tap } from "rxjs/operators";
+import { catchError, tap, first } from "rxjs/operators";
 
 import { UserService } from "src/app/core/services/user.service";
 
@@ -12,11 +11,9 @@ import { AuthModalService } from "../auth-modal.service";
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.less"]
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent {
   public loginForm: FormGroup;
-  public serverError: string = null;
-
-  private subs = new Subscription();
+  public serverError: string;
 
   constructor(
     private fb: FormBuilder,
@@ -29,22 +26,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {
-    this.subs.add(
-      this.loginForm.valueChanges.subscribe(() => {
-        this.serverError = null;
-      })
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.subs.unsubscribe();
-  }
-
   public onSubmit() {
     return this.userService
       .login(this.loginForm.value)
       .pipe(
+        first(),
         tap(() => {
           this.authModalService.close();
         }),
@@ -53,9 +39,18 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.serverError = err.body.message;
           }
 
-          return of({});
+          return this.handleFormChanges();
         })
       )
       .subscribe();
+  }
+
+  private handleFormChanges() {
+    return this.loginForm.valueChanges.pipe(
+      first(),
+      tap(() => {
+        this.serverError = null;
+      })
+    );
   }
 }

@@ -10,10 +10,10 @@ export class UserService {
   private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private auth: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   public checkAuth() {
-    return this.auth.checkAuth().pipe(
+    return this.authService.checkAuth().pipe(
       tap(
         () => {
           this.isAuthenticatedSubject.next(true);
@@ -27,7 +27,7 @@ export class UserService {
   }
 
   public login(body: LoginRequest) {
-    return this.auth.login(body).pipe(
+    return this.authService.login(body).pipe(
       first(),
       tap(() => {
         this.isAuthenticatedSubject.next(true);
@@ -36,7 +36,7 @@ export class UserService {
   }
 
   public logout() {
-    return this.auth.logout().pipe(
+    return this.authService.logout().pipe(
       tap(() => {
         this.isAuthenticatedSubject.next(false);
       }),

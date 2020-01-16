@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { Observable } from "rxjs";
+import { first } from "rxjs/operators";
 
 import { UserService } from "src/app/core/services/user.service";
 import { AuthModalType } from "src/app/auth-modal/auth-modal.model";
@@ -15,10 +16,10 @@ export class HeaderComponent {
   public isUserAuthenticated$: Observable<boolean>;
 
   constructor(
-    private user: UserService,
+    private userService: UserService,
     private authModalService: AuthModalService
   ) {
-    this.isUserAuthenticated$ = this.user.isAuthenticated$;
+    this.isUserAuthenticated$ = this.userService.isAuthenticated$;
   }
 
   public openAuthModal(authType: AuthModalType) {
@@ -26,6 +27,9 @@ export class HeaderComponent {
   }
 
   public logout() {
-    return this.user.logout().subscribe();
+    return this.userService
+      .logout()
+      .pipe(first())
+      .subscribe();
   }
 }

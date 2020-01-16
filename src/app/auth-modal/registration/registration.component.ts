@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { tap, first } from "rxjs/operators";
 
 import { AuthService } from "src/app/core/services/auth.service";
 
@@ -29,8 +30,12 @@ export class RegistrationComponent {
   public onSubmit() {
     return this.authService
       .register(this.registrationForm.value)
-      .subscribe(() => {
-        this.authModalService.close();
-      });
+      .pipe(
+        first(),
+        tap(() => {
+          this.authModalService.close();
+        })
+      )
+      .subscribe();
   }
 }
