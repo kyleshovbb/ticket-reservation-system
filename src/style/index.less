@@ -1,8 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
-@import "./normalize.less";
+
+@import "./theme.less";
 
 * {
   font-family: Roboto;
+}
+
+body {
+  margin: 0;
+  background-color: #edf2f6;
 }
 
 .btn {
@@ -12,7 +18,7 @@
   font-weight: 400;
   white-space: nowrap;
   text-align: center;
-  border: 1px solid #d9d9d9;
+  border: 1px solid @border-color;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -31,27 +37,27 @@
 
   &:disabled {
     cursor: no-drop;
-    background-color: #b4b4b4;
-    border-color: #b4b4b4;
+    background-color: @disable-color;
+    border-color: @disable-color;
 
     &:focus,
     &:hover {
-      background-color: #9d9d9d;
-      border-color: #9d9d9d;
+      background-color: @disable-darken-color;
+      border-color: @disable-darken-color;
     }
   }
 }
 
 .btn-primary {
   color: #fff;
-  background-color: #32d095;
-  border-color: #32d095;
+  background-color: @primary-color;
+  border-color: @primary-color;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
 
   &:focus,
   &:hover {
-    background-color: #37e7a3;
-    border-color: #37e7a3;
+    background-color: @primary-fade-color;
+    border-color: @primary-fade-color;
   }
 }

@@ -1,16 +1,16 @@
 import {
-  ControlValueAccessor,
   NgControl,
-  NG_VALUE_ACCESSOR
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor
 } from "@angular/forms";
 import {
   Input,
+  Injector,
   Component,
-  ChangeDetectionStrategy,
   OnDestroy,
   forwardRef,
-  Injector,
-  AfterViewInit
+  AfterViewInit,
+  ChangeDetectionStrategy
 } from "@angular/core";
 import { Subscription } from "rxjs";
 
@@ -61,9 +61,7 @@ export class InputComponent
 
   writeValue(value: string) {}
 
-  onChange = (value: string) => {
-    this.onChange(value);
-  };
+  onChange = (value: string) => {};
 
   private subscribeToStatusChange() {
     this.subs.add(
