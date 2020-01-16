@@ -1,1 +1,4 @@
-export type AuthModalType = "login" | "registration";
+export enum AuthModalType {
+  Login = "login",
+  Registration = "registration"
+}

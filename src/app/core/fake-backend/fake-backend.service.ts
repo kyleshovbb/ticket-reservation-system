@@ -2,9 +2,8 @@ import { Injectable } from "@angular/core";
 import { HttpResponse } from "@angular/common/http";
 import { of, throwError } from "rxjs";
 
-import { LoginRequest } from "../services/auth.service";
-
 import { User } from "./fake-backend.model";
+import { LoginRequest } from "../models/auth.model";
 
 enum StorageKeys {
   Users = "users"

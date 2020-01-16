@@ -1,16 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
-export interface LoginRequest {
-  username: string;
-  password: string;
-}
-
-export interface RegistrationRequest {
-  email: string;
-  username: string;
-  password: string;
-}
+import { LoginRequest, RegistrationRequest } from "../models/auth.model";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {

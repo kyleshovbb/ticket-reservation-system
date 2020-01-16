@@ -14,7 +14,7 @@ import { AuthModalService } from "../auth-modal.service";
 })
 export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup;
-  public serverError: string | null = null;
+  public serverError: string = null;
 
   private subs = new Subscription();
 

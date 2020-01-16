@@ -8,7 +8,7 @@ export class AuthModalService {
   private isOpenSubject = new ReplaySubject<boolean>(1);
   public isOpen$ = this.isOpenSubject.asObservable();
 
-  private authModalTypeSubject = new BehaviorSubject<AuthModalType>("login");
+  private authModalTypeSubject = new BehaviorSubject(AuthModalType.Login);
   public authModalType$ = this.authModalTypeSubject.asObservable();
 
   public open(authType: AuthModalType) {

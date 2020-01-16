@@ -2,7 +2,8 @@ import { Injectable } from "@angular/core";
 import { of, ReplaySubject } from "rxjs";
 import { first, catchError, tap } from "rxjs/operators";
 
-import { AuthService, LoginRequest } from "./auth.service";
+import { LoginRequest } from "../models/auth.model";
+import { AuthService } from "./auth.service";
 
 @Injectable({ providedIn: "root" })
 export class UserService {

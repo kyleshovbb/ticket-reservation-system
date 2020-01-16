@@ -6,9 +6,9 @@ import { UserService } from "./user.service";
 
 @Injectable({ providedIn: "root" })
 export class AuthGuard implements CanActivate {
-  constructor(private user: UserService) {}
+  constructor(private userService: UserService) {}
 
   canActivate(): Observable<boolean> | boolean {
-    return this.user.isAuthenticated$;
+    return this.userService.isAuthenticated$;
   }
 }
