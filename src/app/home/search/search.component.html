@@ -2,7 +2,11 @@
   <app-radio-group [options]="searchTypeOptions" [(ngModel)]="searchTypeValue">
   </app-radio-group>
 
-  <form class="search__form" [formGroup]="searchForm">
+  <form
+    class="search__form"
+    [formGroup]="searchForm"
+    (submit)="onSubmit($event)"
+  >
     <app-input placeholder="From" formControlName="fromPlace"></app-input>
     <app-input placeholder="To" formControlName="toPlace"></app-input>
     <app-date-picker
@@ -10,12 +14,19 @@
       formControlName="depart"
     ></app-date-picker>
     <app-date-picker
-      placeholder="Return"
       formControlName="return"
+      [disableControl]="roundTripDateIsDisabled"
     ></app-date-picker>
     <app-input-number
-      placeholder="Ticket Count"
       formControlName="ticketCount"
+      [min]="1"
     ></app-input-number>
+    <button
+      class="btn btn-primary search__submit-btn"
+      type="submit"
+      [disabled]="searchForm.invalid"
+    >
+      Search Flights
+    </button>
   </form>
 </div>

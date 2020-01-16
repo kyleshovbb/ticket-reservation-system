@@ -32,7 +32,7 @@ import { ValidatorService } from "../validator.service";
 })
 export class DatePickerComponent
   implements AfterViewInit, ControlValueAccessor {
-  @Input() placeholder: string;
+  @Input() disableControl: boolean = false;
 
   @ViewChild("inputDatePickerElement", { static: true })
   inputDatePickerElement: ElementRef<HTMLInputElement>;
