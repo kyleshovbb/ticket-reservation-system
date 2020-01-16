@@ -34,7 +34,7 @@ export class SearchComponent {
       toPlace: ["", Validators.required],
       depart: ["", Validators.required],
       return: [""],
-      ticketCount: [""]
+      ticketCount: ["", Validators.required]
     });
   }
 }
