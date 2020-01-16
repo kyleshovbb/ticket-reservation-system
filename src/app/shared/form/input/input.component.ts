@@ -7,12 +7,13 @@ import {
   Input,
   Injector,
   Component,
-  OnDestroy,
+  ViewChild,
   forwardRef,
+  ElementRef,
   AfterViewInit,
+  ChangeDetectorRef,
   ChangeDetectionStrategy
 } from "@angular/core";
-import { Subscription } from "rxjs";
 
 import { ValidatorService } from "../validator.service";
 
@@ -29,47 +30,62 @@ import { ValidatorService } from "../validator.service";
     }
   ]
 })
-export class InputComponent
-  implements AfterViewInit, OnDestroy, ControlValueAccessor {
+export class InputComponent implements AfterViewInit, ControlValueAccessor {
   @Input() placeholder: string;
 
-  public error = "";
+  @ViewChild("inputElement", { static: true })
+  inputElement: ElementRef<HTMLInputElement>;
+
+  private _value: string | number;
+  get value() {
+    return this._value;
+  }
+  set value(value: string | number) {
+    this._value = value;
+    this.cdr.markForCheck();
+  }
+
+  private _error: string;
+  get error() {
+    return this._error;
+  }
+  set error(error: string) {
+    this._error = error;
+    this.cdr.markForCheck();
+  }
 
   private ngControl: NgControl;
-  private subs = new Subscription();
 
   constructor(
+    private cdr: ChangeDetectorRef,
     private injector: Injector,
     private validatorService: ValidatorService
   ) {}
 
   ngAfterViewInit(): void {
     this.ngControl = this.injector.get(NgControl);
-
-    this.subscribeToStatusChange();
   }
 
-  ngOnDestroy(): void {
-    this.subs.unsubscribe();
+  public onChange(value: string) {
+    this.saveValue(value);
+    this._change(value);
+    this.error = this.validatorService.getErrorsTipFromValidators(
+      this.ngControl.errors
+    );
   }
 
   registerOnChange(fn: (value: string) => void) {
-    this.onChange = fn;
+    this._change = fn;
   }
 
   registerOnTouched(fn: Function) {}
 
   writeValue(value: string) {}
 
-  onChange = (value: string) => {};
+  private _change = (value: string) => {};
 
-  private subscribeToStatusChange() {
-    this.subs.add(
-      this.ngControl.control.valueChanges.subscribe(() => {
-        this.error = this.validatorService.getErrorsTipFromValidators(
-          this.ngControl.errors
-        );
-      })
-    );
+  private saveValue(value: string | number) {
+    this.value = value;
+    this.inputElement.nativeElement.value = String(value);
   }
 }

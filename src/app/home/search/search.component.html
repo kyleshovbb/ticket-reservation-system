@@ -3,30 +3,13 @@
   </app-radio-group>
 
   <form class="search__form" [formGroup]="searchForm">
-    <app-input
-      class="search__input"
-      placeholder="From"
-      formControlName="fromPlace"
-    ></app-input>
-    <app-input
-      class="search__input"
-      placeholder="To"
-      formControlName="toPlace"
-    ></app-input>
-    <app-input
-      class="search__date-picker"
-      placeholder="Depart"
-      formControlName="depart"
-    ></app-input>
-    <app-input
-      class="search__date-picker"
-      placeholder="Return"
-      formControlName="return"
-    ></app-input>
-    <app-input
-      class="search__input-number"
+    <app-input placeholder="From" formControlName="fromPlace"></app-input>
+    <app-input placeholder="To" formControlName="toPlace"></app-input>
+    <app-input placeholder="Depart" formControlName="depart"></app-input>
+    <app-input placeholder="Return" formControlName="return"></app-input>
+    <app-input-number
       placeholder="Ticket Count"
       formControlName="ticketCount"
-    ></app-input>
+    ></app-input-number>
   </form>
 </div>

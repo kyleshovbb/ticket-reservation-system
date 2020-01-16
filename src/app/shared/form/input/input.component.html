@@ -1,9 +1,11 @@
 <div class="input">
   <input
+    #inputElement
     class="input__field"
     [ngClass]="{ input__error: !!error }"
     [placeholder]="placeholder"
-    (change)="onChange($event.target.value)"
+    [ngModel]="value"
+    (ngModelChange)="onChange($event)"
   />
   <div class="input__error-tip">{{ error }}</div>
 </div>

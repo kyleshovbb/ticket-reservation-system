@@ -6,16 +6,23 @@ import { RadioComponent } from "./radio/radio.component";
 import { InputComponent } from "./input/input.component";
 import { ValidatorService } from "./validator.service";
 import { RadioGroupComponent } from "./radio/radio-group.component";
+import { InputNumberComponent } from "./input-number/input-number.component";
 
 @NgModule({
-  declarations: [InputComponent, RadioComponent, RadioGroupComponent],
+  declarations: [
+    InputComponent,
+    RadioComponent,
+    RadioGroupComponent,
+    InputNumberComponent
+  ],
   providers: [ValidatorService],
   imports: [CommonModule, FormsModule],
   exports: [
+    FormsModule,
+    ReactiveFormsModule,
     InputComponent,
     RadioGroupComponent,
-    FormsModule,
-    ReactiveFormsModule
+    InputNumberComponent
   ]
 })
 export class FormModule {}
