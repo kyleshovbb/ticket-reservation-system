@@ -5,8 +5,14 @@
   <form class="search__form" [formGroup]="searchForm">
     <app-input placeholder="From" formControlName="fromPlace"></app-input>
     <app-input placeholder="To" formControlName="toPlace"></app-input>
-    <app-input placeholder="Depart" formControlName="depart"></app-input>
-    <app-input placeholder="Return" formControlName="return"></app-input>
+    <app-date-picker
+      placeholder="Depart"
+      formControlName="depart"
+    ></app-date-picker>
+    <app-date-picker
+      placeholder="Return"
+      formControlName="return"
+    ></app-date-picker>
     <app-input-number
       placeholder="Ticket Count"
       formControlName="ticketCount"
