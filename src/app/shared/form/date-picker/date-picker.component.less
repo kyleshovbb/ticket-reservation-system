@@ -41,6 +41,18 @@
         border-color: @error-color;
       }
     }
+
+    &:disabled {
+      border-color: @disable-color;
+      background-color: @disable-color;
+      cursor: no-drop;
+
+      &:focus,
+      &:hover {
+        border-color: @disable-darken-color;
+        background-color: @disable-darken-color;
+      }
+    }
   }
 
   &__error-tip {

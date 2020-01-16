@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 import { Option } from "src/app/shared/form/form.model";
 
+import { HomeService } from "../home.service";
+
 enum SearchTypeValue {
   OneWay = "one-way",
   RoundTrip = "round-trip"
@@ -19,16 +21,16 @@ export class SearchComponent {
   public searchTypeValue = SearchTypeValue.RoundTrip;
   public searchTypeOptions: Option[] = [
     {
-      value: SearchTypeValue.OneWay,
-      label: "One way"
-    },
-    {
       value: SearchTypeValue.RoundTrip,
       label: "Round Trip"
+    },
+    {
+      value: SearchTypeValue.OneWay,
+      label: "One way"
     }
   ];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private homeService: HomeService) {
     this.searchForm = this.fb.group({
       fromPlace: ["", Validators.required],
       toPlace: ["", Validators.required],
@@ -36,5 +38,13 @@ export class SearchComponent {
       return: [""],
       ticketCount: ["", Validators.required]
     });
+  }
+
+  public get roundTripDateIsDisabled() {
+    return this.searchTypeValue === SearchTypeValue.OneWay;
+  }
+
+  public onSubmit() {
+    this.homeService.loadTickets(this.searchForm.value);
   }
 }
