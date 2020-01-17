@@ -1,11 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { tap } from "rxjs/operators";
 
-export interface LoginRequest {
-  username: string;
-  password: string;
-}
+import { LoginRequest, RegistrationRequest } from "../models/auth.model";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
@@ -13,6 +9,10 @@ export class AuthService {
 
   public login(body: LoginRequest) {
     return this.http.post("login", body);
+  }
+
+  public register(body: RegistrationRequest) {
+    return this.http.post("register", body);
   }
 
   public logout() {

@@ -1,18 +1,19 @@
 import { Injectable } from "@angular/core";
 import { of, ReplaySubject } from "rxjs";
-import { first, catchError, tap } from "rxjs/operators";
+import { catchError, tap } from "rxjs/operators";
 
-import { AuthService, LoginRequest } from "./auth.service";
+import { AuthService } from "./auth.service";
+import { LoginRequest } from "../models/auth.model";
 
 @Injectable({ providedIn: "root" })
 export class UserService {
   private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
-  public isAuthenticated = this.isAuthenticatedSubject.asObservable();
+  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private auth: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   public checkAuth() {
-    return this.auth.checkAuth().pipe(
+    return this.authService.checkAuth().pipe(
       tap(
         () => {
           this.isAuthenticatedSubject.next(true);
@@ -26,17 +27,15 @@ export class UserService {
   }
 
   public login(body: LoginRequest) {
-    return this.auth.login(body).pipe(
-      first(),
+    return this.authService.login(body).pipe(
       tap(() => {
         this.isAuthenticatedSubject.next(true);
-      }),
-      catchError(() => of({}))
+      })
     );
   }
 
   public logout() {
-    return this.auth.logout().pipe(
+    return this.authService.logout().pipe(
       tap(() => {
         this.isAuthenticatedSubject.next(false);
       }),

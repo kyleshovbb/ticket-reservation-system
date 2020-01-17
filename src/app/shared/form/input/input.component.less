@@ -1,0 +1,50 @@
+.input {
+  margin-bottom: 20px;
+
+  &__field {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 4px 11px;
+    list-style: none;
+    position: relative;
+    display: inline-block;
+    width: 250px;
+    height: 32px;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 14px;
+    line-height: 1.5;
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    transition: all 0.3s;
+
+    &:focus {
+      border-color: #40a9ff;
+      outline: 0;
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+    }
+
+    &::placeholder {
+      color: #d6dae5;
+    }
+
+    &:hover {
+      border-color: #40a9ff;
+    }
+
+    &.input__error {
+      border-color: #f5222d;
+
+      &:hover {
+        border-color: #f5222d;
+      }
+    }
+  }
+
+  &__error-tip {
+    position: absolute;
+    color: #f5222d;
+    margin-top: 2px;
+    font-size: 12px;
+  }
+}

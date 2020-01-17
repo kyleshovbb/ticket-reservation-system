@@ -3,7 +3,7 @@ import { HttpResponse } from "@angular/common/http";
 import { of, throwError } from "rxjs";
 
 import { User } from "./fake-backend.model";
-import { LoginRequest } from "../services/auth.service";
+import { LoginRequest } from "../models/auth.model";
 
 enum StorageKeys {
   Users = "users"

@@ -11,7 +11,7 @@ import { FakeBackendService } from "./fake-backend.service";
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
-  constructor(private fakeBackend: FakeBackendService) {}
+  constructor(private fakeBackendService: FakeBackendService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     return of(null).pipe(mergeMap(() => this.handleRoute(req, next)));
@@ -22,11 +22,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     switch (true) {
       case url.endsWith("check-auth") && method === "GET":
-        return this.fakeBackend.checkUser();
+        return this.fakeBackendService.checkUser();
       case url.endsWith("logout") && method === "GET":
-        return this.fakeBackend.logout();
+        return this.fakeBackendService.logout();
       case url.endsWith("login") && method === "POST":
-        return this.fakeBackend.login(body);
+        return this.fakeBackendService.login(body);
+      case url.endsWith("register") && method === "POST":
+        return this.fakeBackendService.register(body);
       default:
         return next.handle(req);
     }
