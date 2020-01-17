@@ -1,13 +1,7 @@
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
-import {
-  Input,
-  Component,
-  forwardRef,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef
-} from "@angular/core";
+import { Input, Component, forwardRef, ChangeDetectorRef, ChangeDetectionStrategy } from "@angular/core";
 
-import { Option } from "../form.model";
+import { Option } from "../../models/form.model";
 
 @Component({
   selector: "app-radio-group",
@@ -24,16 +18,16 @@ import { Option } from "../form.model";
 export class RadioGroupComponent implements ControlValueAccessor {
   @Input() options: Option[];
 
-  private _value: string;
-
-  get value() {
+  public get value() {
     return this._value;
   }
 
-  set value(value: string) {
+  public set value(value: string) {
     this._value = value;
     this.cdr.markForCheck();
   }
+
+  private _value: string;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -48,7 +42,7 @@ export class RadioGroupComponent implements ControlValueAccessor {
 
   registerOnTouched(fn: Function) {}
 
-  writeValue(value: string | null) {
+  writeValue(value: string) {
     if (value) {
       this.value = value;
     }

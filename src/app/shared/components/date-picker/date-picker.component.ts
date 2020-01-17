@@ -1,8 +1,4 @@
-import {
-  NgControl,
-  NG_VALUE_ACCESSOR,
-  ControlValueAccessor
-} from "@angular/forms";
+import { NgControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import {
   Input,
   Injector,
@@ -15,7 +11,7 @@ import {
   ChangeDetectionStrategy
 } from "@angular/core";
 
-import { ValidatorService } from "../validator.service";
+import { ValidatorService } from "../../services/validator.service";
 
 @Component({
   selector: "app-date-picker",
@@ -30,38 +26,35 @@ import { ValidatorService } from "../validator.service";
     }
   ]
 })
-export class DatePickerComponent
-  implements AfterViewInit, ControlValueAccessor {
+export class DatePickerComponent implements AfterViewInit, ControlValueAccessor {
   @Input() disableControl: boolean = false;
 
   @ViewChild("inputDatePickerElement", { static: true })
   inputDatePickerElement: ElementRef<HTMLInputElement>;
 
-  private _value: string | number;
-  get value() {
+  public get value() {
     return this._value;
   }
-  set value(value: string | number) {
+
+  public set value(value: string | number) {
     this._value = value;
     this.cdr.markForCheck();
   }
 
-  private _error: string;
-  get error() {
+  public get error() {
     return this._error;
   }
-  set error(error: string) {
+
+  public set error(error: string) {
     this._error = error;
     this.cdr.markForCheck();
   }
 
+  private _error: string;
+  private _value: string | number;
   private ngControl: NgControl;
 
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private injector: Injector,
-    private validatorService: ValidatorService
-  ) {}
+  constructor(private cdr: ChangeDetectorRef, private injector: Injector, private validatorService: ValidatorService) {}
 
   ngAfterViewInit(): void {
     this.ngControl = this.injector.get(NgControl);
@@ -70,9 +63,7 @@ export class DatePickerComponent
   public onChange(value: string) {
     this.saveValue(value);
     this._change(value);
-    this.error = this.validatorService.getErrorsTipFromValidators(
-      this.ngControl.errors
-    );
+    this.error = this.validatorService.getErrorsTipFromValidators(this.ngControl.errors);
   }
 
   registerOnChange(fn: (value: string) => void) {

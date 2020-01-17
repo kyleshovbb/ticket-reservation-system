@@ -1,21 +1,17 @@
-import {
-  NgControl,
-  NG_VALUE_ACCESSOR,
-  ControlValueAccessor
-} from "@angular/forms";
+import { NgControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import {
   Input,
   Injector,
   Component,
+  ViewChild,
   forwardRef,
+  ElementRef,
   AfterViewInit,
   ChangeDetectorRef,
-  ChangeDetectionStrategy,
-  ViewChild,
-  ElementRef
+  ChangeDetectionStrategy
 } from "@angular/core";
 
-import { ValidatorService } from "../validator.service";
+import { ValidatorService } from "../../services/validator.service";
 
 @Component({
   selector: "app-input-number",
@@ -30,55 +26,50 @@ import { ValidatorService } from "../validator.service";
     }
   ]
 })
-export class InputNumberComponent
-  implements AfterViewInit, ControlValueAccessor {
-  @Input() min: number = -Infinity;
-  @Input() max: number = Infinity;
+export class InputNumberComponent implements AfterViewInit, ControlValueAccessor {
+  @Input() min: number;
+  @Input() max: number;
   @Input() step: number = 1;
   @Input() placeholder: string;
 
   @ViewChild("inputNumberElement", { static: true })
   inputNumberElement: ElementRef<HTMLInputElement>;
 
-  private _value: string | number;
-  get value() {
+  public get value() {
     return this._value;
   }
-  set value(value: string | number) {
+
+  public set value(value: string | number) {
     this._value = value;
     this.cdr.markForCheck();
   }
 
-  private _error: string;
-  get error() {
+  public get error() {
     return this._error;
   }
-  set error(error: string) {
+
+  public set error(error: string) {
     this._error = error;
     this.cdr.markForCheck();
   }
 
+  private _value: string | number;
+  private _error: string;
   private ngControl: NgControl;
 
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private injector: Injector,
-    private validatorService: ValidatorService
-  ) {}
+  constructor(private cdr: ChangeDetectorRef, private injector: Injector, private validatorService: ValidatorService) {}
 
   ngAfterViewInit(): void {
     this.ngControl = this.injector.get(NgControl);
   }
 
-  public onChange(value: string | number | null) {
+  public onChange(value: string | number) {
     const currentValue = this.getCurrentValidValue(value);
 
     if (this.value !== currentValue) {
       this.saveValue(currentValue);
       this._change(currentValue);
-      this.error = this.validatorService.getErrorsTipFromValidators(
-        this.ngControl.errors
-      );
+      this.error = this.validatorService.getErrorsTipFromValidators(this.ngControl.errors);
     }
   }
 
@@ -94,7 +85,7 @@ export class InputNumberComponent
 
   private _change = (value: string | number) => {};
 
-  private getCurrentValidValue(value: string | number | null): string | number {
+  private getCurrentValidValue(value: string | number): string | number {
     let val: string | number;
 
     if (value === "" || value === null) {
@@ -109,9 +100,9 @@ export class InputNumberComponent
   private getValidValue(value: string | number): number {
     let val = this.parseValueToNumber(value);
 
-    if (val < this.min) {
+    if (typeof this.min === "number" && val < this.min) {
       val = this.min;
-    } else if (val > this.max) {
+    } else if (typeof this.max === "number" && val > this.max) {
       val = this.max;
     }
 

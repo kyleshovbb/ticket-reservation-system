@@ -1,10 +1,4 @@
-import {
-  Input,
-  Output,
-  Component,
-  EventEmitter,
-  ChangeDetectionStrategy
-} from "@angular/core";
+import { Input, Output, Component, EventEmitter, ChangeDetectionStrategy } from "@angular/core";
 
 @Component({
   selector: "app-radio",

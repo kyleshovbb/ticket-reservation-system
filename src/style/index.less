@@ -8,7 +8,7 @@
 
 body {
   margin: 0;
-  background-color: #edf2f6;
+  background-color: @main-background-color;
 }
 
 .btn {
@@ -19,15 +19,13 @@ body {
   white-space: nowrap;
   text-align: center;
   border: 1px solid @border-color;
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   height: 32px;
   padding: 0 15px;
   font-size: 14px;
   border-radius: 4px;
-  color: rgba(0, 0, 0, 0.65);
-  background-color: #fff;
+  color: @text-color;
+  background-color: @white;
 
   &:active,
   &:focus {
@@ -49,11 +47,11 @@ body {
 }
 
 .btn-primary {
-  color: #fff;
+  color: @white;
   background-color: @primary-color;
   border-color: @primary-color;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+  text-shadow: 0 -1px 0 @primary-transparent-color;
+  box-shadow: 0 2px 0 @primary-transparent-color;
 
   &:focus,
   &:hover {

@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
-import { Option } from "src/app/shared/form/form.model";
+import { Option } from "src/app/shared/models/form.model";
 
 import { HomeService } from "../home.service";
 
@@ -30,6 +30,10 @@ export class SearchComponent {
     }
   ];
 
+  public get roundTripDateIsDisabled() {
+    return this.searchTypeValue === SearchTypeValue.OneWay;
+  }
+
   constructor(private fb: FormBuilder, private homeService: HomeService) {
     this.searchForm = this.fb.group({
       fromPlace: ["", Validators.required],
@@ -38,10 +42,6 @@ export class SearchComponent {
       return: [""],
       ticketCount: ["", Validators.required]
     });
-  }
-
-  public get roundTripDateIsDisabled() {
-    return this.searchTypeValue === SearchTypeValue.OneWay;
   }
 
   public onSubmit() {

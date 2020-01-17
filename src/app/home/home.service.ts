@@ -8,6 +8,7 @@ import { TicketInfo } from "./home.model";
 @Injectable()
 export class HomeService {
   private ticketsSubject = new Subject<TicketInfo[]>();
+  // tslint:disable-next-line: member-ordering
   public tickets$ = this.ticketsSubject.asObservable();
 
   constructor(private http: HttpClient) {}

@@ -6,9 +6,11 @@ import { AuthModalType } from "./auth-modal.model";
 @Injectable()
 export class AuthModalService {
   private isOpenSubject = new ReplaySubject<boolean>(1);
+  // tslint:disable-next-line: member-ordering
   public isOpen$ = this.isOpenSubject.asObservable();
 
   private authModalTypeSubject = new BehaviorSubject(AuthModalType.Login);
+  // tslint:disable-next-line: member-ordering
   public authModalType$ = this.authModalTypeSubject.asObservable();
 
   public open(authType: AuthModalType) {
