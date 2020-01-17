@@ -1,12 +1,11 @@
 <div class="input-number">
   <input
-    #inputNumberElement
     class="input-number__field"
     type="number"
     [min]="min"
     [max]="max"
     [step]="step"
-    [ngClass]="{ input__error: !!error }"
+    [ngClass]="{ 'input-number__error': !!error }"
     [placeholder]="placeholder"
     [ngModel]="value"
     (ngModelChange)="onChange($event)"

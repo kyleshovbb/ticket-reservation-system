@@ -3,9 +3,7 @@ import {
   Input,
   Injector,
   Component,
-  ViewChild,
   forwardRef,
-  ElementRef,
   AfterViewInit,
   ChangeDetectorRef,
   ChangeDetectionStrategy
@@ -31,9 +29,6 @@ export class InputNumberComponent implements AfterViewInit, ControlValueAccessor
   @Input() max: number;
   @Input() step: number = 1;
   @Input() placeholder: string;
-
-  @ViewChild("inputNumberElement", { static: true })
-  inputNumberElement: ElementRef<HTMLInputElement>;
 
   public get value() {
     return this._value;
@@ -67,7 +62,7 @@ export class InputNumberComponent implements AfterViewInit, ControlValueAccessor
     const currentValue = this.getCurrentValidValue(value);
 
     if (this.value !== currentValue) {
-      this.saveValue(currentValue);
+      this.value = currentValue;
       this._change(currentValue);
       this.error = this.validatorService.getErrorsTipFromValidators(this.ngControl.errors);
     }
@@ -111,10 +106,5 @@ export class InputNumberComponent implements AfterViewInit, ControlValueAccessor
 
   private parseValueToNumber(value: string | number): number {
     return typeof value === "string" ? parseFloat(value) : value;
-  }
-
-  private saveValue(value: string | number) {
-    this.value = value;
-    this.inputNumberElement.nativeElement.value = String(value);
   }
 }

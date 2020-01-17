@@ -3,9 +3,7 @@ import {
   Input,
   Injector,
   Component,
-  ViewChild,
   forwardRef,
-  ElementRef,
   AfterViewInit,
   ChangeDetectorRef,
   ChangeDetectionStrategy
@@ -28,9 +26,6 @@ import { ValidatorService } from "../../services/validator.service";
 })
 export class InputComponent implements AfterViewInit, ControlValueAccessor {
   @Input() placeholder: string;
-
-  @ViewChild("inputElement", { static: true })
-  inputElement: ElementRef<HTMLInputElement>;
 
   public get value() {
     return this._value;
@@ -61,7 +56,7 @@ export class InputComponent implements AfterViewInit, ControlValueAccessor {
   }
 
   public onChange(value: string) {
-    this.saveValue(value);
+    this.value = value;
     this._change(value);
     this.error = this.validatorService.getErrorsTipFromValidators(this.ngControl.errors);
   }
@@ -75,9 +70,4 @@ export class InputComponent implements AfterViewInit, ControlValueAccessor {
   writeValue(value: string) {}
 
   private _change = (value: string) => {};
-
-  private saveValue(value: string | number) {
-    this.value = value;
-    this.inputElement.nativeElement.value = String(value);
-  }
 }

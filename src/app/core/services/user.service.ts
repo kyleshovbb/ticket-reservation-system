@@ -8,8 +8,10 @@ import { LoginRequest } from "../models/auth.model";
 @Injectable()
 export class UserService {
   private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
-  // tslint:disable-next-line: member-ordering
-  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+
+  public get isAuthenticated$() {
+    return this.isAuthenticatedSubject.asObservable();
+  }
 
   constructor(private authService: AuthService) {}
 
