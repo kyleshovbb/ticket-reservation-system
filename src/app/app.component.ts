@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { first } from "rxjs/operators";
 
 import { UserService } from "./core/services/user.service";
 
@@ -11,9 +10,6 @@ export class AppComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.userService
-      .checkAuth()
-      .pipe(first())
-      .subscribe();
+    this.userService.checkAuth().subscribe();
   }
 }

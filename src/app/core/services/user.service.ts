@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { of, ReplaySubject } from "rxjs";
-import { first, catchError, tap } from "rxjs/operators";
+import { catchError, tap } from "rxjs/operators";
 
-import { LoginRequest } from "../models/auth.model";
 import { AuthService } from "./auth.service";
+import { LoginRequest } from "../models/auth.model";
 
 @Injectable({ providedIn: "root" })
 export class UserService {
@@ -28,7 +28,6 @@ export class UserService {
 
   public login(body: LoginRequest) {
     return this.authService.login(body).pipe(
-      first(),
       tap(() => {
         this.isAuthenticatedSubject.next(true);
       })

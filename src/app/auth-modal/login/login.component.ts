@@ -30,7 +30,6 @@ export class LoginComponent {
     return this.userService
       .login(this.loginForm.value)
       .pipe(
-        first(),
         tap(() => {
           this.authModalService.close();
         }),
