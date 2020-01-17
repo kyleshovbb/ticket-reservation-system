@@ -1,0 +1,11 @@
+<div class="date-picker">
+  <input
+    type="date"
+    class="date-picker__field"
+    [ngClass]="{ input__error: !!error }"
+    [ngModel]="value"
+    [disabled]="disableControl"
+    (ngModelChange)="onChange($event)"
+  />
+  <div class="date-picker__error-tip">{{ error }}</div>
+</div>

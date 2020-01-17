@@ -1,0 +1,14 @@
+<div class="input-number">
+  <input
+    class="input-number__field"
+    type="number"
+    [min]="min"
+    [max]="max"
+    [step]="step"
+    [ngClass]="{ 'input-number__error': !!error }"
+    [placeholder]="placeholder"
+    [ngModel]="value"
+    (ngModelChange)="onChange($event)"
+  />
+  <div class="input-number__error-tip">{{ error }}</div>
+</div>

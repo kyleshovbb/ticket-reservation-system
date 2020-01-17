@@ -1,5 +1,7 @@
+@import "../../../style/theme.less";
+
 .header {
-  background-color: #404156;
+  background-color: @background-color;
   display: flex;
   justify-content: space-between;
   padding: 5px 20px;
@@ -7,13 +9,13 @@
   &__btn {
     cursor: pointer;
     background-color: transparent;
-    color: #cecece;
+    color: @disable-color;
     border: none;
     margin: 0 10px;
 
     &:hover {
       transition: 0.5s;
-      color: #fdfdfd;
+      color: @text-color;
     }
   }
 }

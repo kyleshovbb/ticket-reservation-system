@@ -1,0 +1,9 @@
+<div class="radio-group">
+  <app-radio
+    *ngFor="let option of options"
+    [value]="option.value"
+    [label]="option.label"
+    [isChecked]="value === option.value"
+    (valueChange)="onChange($event)"
+  ></app-radio>
+</div>

@@ -5,10 +5,13 @@ import { catchError, tap } from "rxjs/operators";
 import { AuthService } from "./auth.service";
 import { LoginRequest } from "../models/auth.model";
 
-@Injectable({ providedIn: "root" })
+@Injectable()
 export class UserService {
   private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
-  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+
+  public get isAuthenticated$() {
+    return this.isAuthenticatedSubject.asObservable();
+  }
 
   constructor(private authService: AuthService) {}
 

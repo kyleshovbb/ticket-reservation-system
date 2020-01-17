@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 
 import { LoginRequest, RegistrationRequest } from "../models/auth.model";
 
-@Injectable({ providedIn: "root" })
+@Injectable()
 export class AuthService {
   constructor(private http: HttpClient) {}
 
