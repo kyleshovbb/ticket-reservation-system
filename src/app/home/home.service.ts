@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Subject, of } from "rxjs";
-import { tap, catchError, first } from "rxjs/operators";
+import { tap, catchError } from "rxjs/operators";
 
 import { TicketInfo } from "./home.model";
 
@@ -14,7 +14,6 @@ export class HomeService {
 
   public loadTickets(params: any) {
     return this.fetchTickets(params).pipe(
-      first(),
       tap(tickets => {
         this.ticketsSubject.next(tickets);
       }),
