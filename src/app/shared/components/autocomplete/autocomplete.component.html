@@ -6,10 +6,15 @@
     [ngModel]="value"
     (ngModelChange)="onChange($event)"
   />
-  <div class="autocomplete__error-tip">{{ error }}</div>
-  <div class="autocomplete__options" *ngIf="optionsIsShowed">
-    <div class="autocomplete__option" *ngFor="let option of options" (click)="onSelect(option.value)">
-      {{ option.label }}
+
+  <div class="autocomplete__error-tip" *ngIf="error">{{ error }}</div>
+
+  <ng-container *ngIf="optionsIsShowed">
+    <div class="autocomplete__options">
+      <div class="autocomplete__option" *ngFor="let option of options" (click)="onSelect(option.value)">
+        {{ option.label }}
+      </div>
     </div>
-  </div>
+    <div class="autocomplete__overlay" (click)="onClose()"></div>
+  </ng-container>
 </div>
