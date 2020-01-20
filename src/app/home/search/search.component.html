@@ -2,8 +2,8 @@
   <app-radio-group [options]="searchTypeOptions" [(ngModel)]="searchTypeValue"> </app-radio-group>
 
   <form class="search__form" [formGroup]="searchForm" (submit)="onSubmit($event)">
-    <app-input placeholder="From" formControlName="fromPlace"></app-input>
-    <app-input placeholder="To" formControlName="toPlace"></app-input>
+    <app-autocomplete placeholder="From" formControlName="fromPlace" [options]="fromAirportOptions"></app-autocomplete>
+    <app-autocomplete placeholder="To" formControlName="toPlace" [options]="toAirportOptions"></app-autocomplete>
     <app-date-picker placeholder="Depart" formControlName="depart"></app-date-picker>
     <app-date-picker formControlName="return" [disableControl]="roundTripDateIsDisabled"></app-date-picker>
     <app-input-number formControlName="ticketCount" placeholder="Tickets count" [min]="1"></app-input-number>

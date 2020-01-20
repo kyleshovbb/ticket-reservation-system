@@ -17,20 +17,25 @@
     width: 250px;
   }
 
-  app-input,
-  app-input-number,
-  app-date-picker {
-    margin-right: 20px;
+  ::ng-deep {
+    app-input,
+    app-date-picker,
+    app-input-number,
+    app-autocomplete {
+      margin-right: 20px;
 
-    .input__field,
-    .input-number__field,
-    .date-picker__field {
-      color: @white;
-      background-color: @background-fade-color;
-    }
+      .input__field,
+      .date-picker__field,
+      .input-number__field,
+      .autocomplete__field,
+      .autocomplete__options {
+        color: @white;
+        background-color: @background-fade-color;
+      }
 
-    .date-picker__field {
-      width: 160px;
+      .date-picker__field {
+        width: 160px;
+      }
     }
   }
 }

@@ -8,9 +8,17 @@ import { InputComponent } from "./components/input/input.component";
 import { RadioGroupComponent } from "./components/radio/radio-group.component";
 import { DatePickerComponent } from "./components/date-picker/date-picker.component";
 import { InputNumberComponent } from "./components/input-number/input-number.component";
+import { AutocompleteComponent } from "./components/autocomplete/autocomplete.component";
 
 @NgModule({
-  declarations: [InputComponent, RadioComponent, DatePickerComponent, RadioGroupComponent, InputNumberComponent],
+  declarations: [
+    InputComponent,
+    RadioComponent,
+    DatePickerComponent,
+    RadioGroupComponent,
+    InputNumberComponent,
+    AutocompleteComponent
+  ],
   imports: [CommonModule, FormsModule],
   exports: [
     FormsModule,
@@ -18,7 +26,8 @@ import { InputNumberComponent } from "./components/input-number/input-number.com
     InputComponent,
     DatePickerComponent,
     RadioGroupComponent,
-    InputNumberComponent
+    InputNumberComponent,
+    AutocompleteComponent
   ]
 })
 export class SharedModule {
