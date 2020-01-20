@@ -1,7 +1,7 @@
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Component, ViewEncapsulation, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
-import { Subscription } from "rxjs";
-import { tap, mergeMap, debounceTime, distinctUntilChanged, map } from "rxjs/operators";
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
+import { Subscription, pipe } from "rxjs";
+import { debounceTime, distinctUntilChanged, mergeMap, map } from "rxjs/operators";
 
 import { Option } from "src/app/shared/models/form.model";
 
@@ -17,9 +17,7 @@ enum SearchTypeValue {
 @Component({
   selector: "app-home-search",
   templateUrl: "./search.component.html",
-  styleUrls: ["./search.component.less"],
-  encapsulation: ViewEncapsulation.None,
-  providers: [SearchService]
+  styleUrls: ["./search.component.less"]
 })
 export class SearchComponent implements OnInit, OnDestroy {
   public searchForm: FormGroup;
@@ -91,30 +89,25 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   private handleFromPlaceValueChanges() {
     return this.searchForm.controls["fromPlace"].valueChanges
-      .pipe(
-        debounceTime(150),
-        distinctUntilChanged(),
-        mergeMap(value => this.searchService.fetchAirports(value)),
-        map(airports => this.parseAirportsToOptions(airports)),
-        tap(options => {
-          this.fromAirportOptions = options;
-        })
-      )
-      .subscribe();
+      .pipe(this.fetchAirportsOptionsPipe())
+      .subscribe(options => {
+        this.fromAirportOptions = options;
+      });
   }
 
   private handleToPlaceValueChanges() {
-    return this.searchForm.controls["toPlace"].valueChanges
-      .pipe(
-        debounceTime(150),
-        distinctUntilChanged(),
-        mergeMap(value => this.searchService.fetchAirports(value)),
-        map(airports => this.parseAirportsToOptions(airports)),
-        tap(options => {
-          this.toAirportOptions = options;
-        })
-      )
-      .subscribe();
+    return this.searchForm.controls["toPlace"].valueChanges.pipe(this.fetchAirportsOptionsPipe()).subscribe(options => {
+      this.toAirportOptions = options;
+    });
+  }
+
+  private fetchAirportsOptionsPipe() {
+    return pipe(
+      debounceTime(150),
+      distinctUntilChanged(),
+      mergeMap((value: string) => this.searchService.fetchAirports(value)),
+      map(airports => this.parseAirportsToOptions(airports))
+    );
   }
 
   private parseAirportsToOptions(airports: Airport[]): Option[] {

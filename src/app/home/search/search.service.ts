@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { from } from "rxjs";
-import { mergeMap, take, toArray } from "rxjs/operators";
+import { map } from "rxjs/operators";
 
 import { Airport } from "./search.model";
 
@@ -16,10 +15,6 @@ export class SearchService {
           text: searchQuery
         }
       })
-      .pipe(
-        mergeMap(airports => from(airports)),
-        take(15),
-        toArray()
-      );
+      .pipe(map(airports => airports.slice(15)));
   }
 }

@@ -9,7 +9,7 @@
 
   <div class="autocomplete__error-tip" *ngIf="error">{{ error }}</div>
 
-  <ng-container *ngIf="optionsIsShowed">
+  <ng-container *ngIf="areOptionsShown">
     <div class="autocomplete__options">
       <div class="autocomplete__option" *ngFor="let option of options" (click)="onSelect(option.value)">
         {{ option.label }}

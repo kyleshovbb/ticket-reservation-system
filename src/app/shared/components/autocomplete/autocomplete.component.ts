@@ -47,7 +47,7 @@ export class AutocompleteComponent implements AfterViewInit, ControlValueAccesso
     this.cdr.markForCheck();
   }
 
-  public get optionsIsShowed() {
+  public get areOptionsShown() {
     return this.isOpened && this.options && this.options.length > 0;
   }
 
