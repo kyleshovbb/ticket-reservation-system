@@ -9,3 +9,11 @@ export interface Airport {
   themes: string[];
   pointsOfSale: string[];
 }
+
+export interface SearchFormValue {
+  originPlace: string;
+  destinationPlace: string;
+  outboundDate: string;
+  returnDate: string;
+  adults: string | number;
+}

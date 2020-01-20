@@ -5,6 +5,7 @@ import { AuthService } from "./services/auth.service";
 import { UserService } from "./services/user.service";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 
+import { FlightDataInterceptor } from "./interceptors/flight-data.interceptor";
 import { FakeBackendInterceptor } from "./fake-backend/fake-backend.interceptor";
 import { AirportsFinderInterceptor } from "./interceptors/airports-finder.interceptor";
 
@@ -25,6 +26,11 @@ export class CoreModule {
         {
           provide: HTTP_INTERCEPTORS,
           useClass: AirportsFinderInterceptor,
+          multi: true
+        },
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: FlightDataInterceptor,
           multi: true
         }
       ]
