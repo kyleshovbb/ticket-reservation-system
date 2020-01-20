@@ -76,6 +76,10 @@ export class AutocompleteComponent implements AfterViewInit, ControlValueAccesso
     this.error = this.validatorService.getErrorsTipFromValidators(this.ngControl.errors);
   }
 
+  public onClose() {
+    this.isOpened = false;
+  }
+
   registerOnChange(fn: (value: string) => void) {
     this._change = fn;
   }
