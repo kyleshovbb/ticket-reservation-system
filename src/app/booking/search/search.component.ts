@@ -5,9 +5,9 @@ import { debounceTime, distinctUntilChanged, mergeMap, map } from "rxjs/operator
 
 import { Option } from "src/app/shared/models/form.model";
 
-import { Airport } from "./search.model";
 import { SearchService } from "./search.service";
 import { BookingService } from "../booking.service";
+import { AirportResponse } from "./search.model";
 
 enum SearchTypeValue {
   OneWay = "one-way",
@@ -84,7 +84,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit() {
-    this.homeService.loadTickets(this.searchForm.value).subscribe();
+    this.homeService.loadTicketsList(this.searchForm.value).subscribe();
   }
 
   private handleOriginPlaceValueChanges() {
@@ -112,7 +112,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     );
   }
 
-  private parseAirportsToOptions(airports: Airport[]): Option[] {
+  private parseAirportsToOptions(airports: AirportResponse[]): Option[] {
     return airports.map(airport => ({
       label: `${airport.name} (${airport.code})`,
       value: airport.code

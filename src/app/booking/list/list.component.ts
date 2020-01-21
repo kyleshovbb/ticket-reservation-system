@@ -1,12 +1,22 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
+import { Observable } from "rxjs";
+
+import { BookingTicket } from "../booking.model";
+import { BookingService } from "../booking.service";
 
 @Component({
   selector: "app-booking-list",
   templateUrl: "./list.component.html",
   styleUrls: ["./list.component.less"]
 })
-export class ListComponent implements OnInit {
-  constructor() {}
+export class ListComponent {
+  public bookingTickets$: Observable<BookingTicket[]>;
 
-  ngOnInit() {}
+  constructor(bookingService: BookingService) {
+    this.bookingTickets$ = bookingService.bookingTickets$;
+  }
+
+  public getEmptyArray(count: number) {
+    return new Array(count);
+  }
 }

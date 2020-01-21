@@ -3,40 +3,51 @@ import { HttpClient } from "@angular/common/http";
 import { Subject, of, Observable } from "rxjs";
 import { tap, catchError, map } from "rxjs/operators";
 
-import { BookingTicketResponse, TicketInfo } from "./booking.model";
 import { SearchFormValue } from "./search/search.model";
+import { BookingTicketResponse, BookingTicket } from "./booking.model";
 
 @Injectable()
 export class BookingService {
-  private ticketsSubject = new Subject<TicketInfo[]>();
+  private bookingTicketsSubject = new Subject<BookingTicket[]>();
 
-  public get tickets$() {
-    return this.ticketsSubject.asObservable();
+  public get bookingTickets$() {
+    return this.bookingTicketsSubject.asObservable();
   }
 
   constructor(private http: HttpClient) {}
 
-  public loadTickets(params: SearchFormValue) {
-    return this.fetchTickets(params).pipe(
+  public loadTicketsList(params: SearchFormValue) {
+    return this.fetchTicketsList(params).pipe(
       tap(tickets => {
-        this.ticketsSubject.next(tickets);
+        console.log(tickets);
+        this.bookingTicketsSubject.next(tickets);
       }),
       catchError(() => of({}))
     );
   }
 
-  private fetchTickets(params: SearchFormValue): Observable<TicketInfo[]> {
+  private fetchTicketsList(params: SearchFormValue): Observable<BookingTicket[]> {
     return this.http
-      .get<BookingTicketResponse>("prices/nearest-places-matrix", {
+      .get<BookingTicketResponse>("flights/create-session", {
         params: {
-          destination: params.destinationPlace,
-          origin: params.originPlace,
-          depart_date: params.outboundDate,
-          return_date: params.returnDate,
-          limit: "30",
-          currency: "USD"
+          from0: params.originPlace,
+          to0: params.destinationPlace,
+          date0: params.outboundDate,
+          pax: String(params.adults),
+          cabin: "Basic Coach|Coach|Premium Coach|Business|First|Air Taxi",
+          ...(params.returnDate ? { return_date: params.returnDate } : {})
         }
       })
-      .pipe(map(response => response.data));
+      .pipe(map(response => this.getBookingTickets(response)));
+  }
+
+  private getBookingTickets(response: BookingTicketResponse): BookingTicket[] {
+    return Object.keys(response.itins)
+      .map(iden => new BookingTicket(response, iden))
+      .sort(this.compareTicketsByPrice);
+  }
+
+  private compareTicketsByPrice(a: BookingTicket, b: BookingTicket) {
+    return a.ticketInfo.price - b.ticketInfo.price;
   }
 }

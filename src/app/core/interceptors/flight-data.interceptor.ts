@@ -8,13 +8,12 @@ export class FlightDataInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const { url, method } = req;
 
-    if (url.endsWith("prices/nearest-places-matrix") && method === "GET") {
+    if (url.endsWith("flights/create-session") && method === "GET") {
       req = req.clone({
-        url: environment.flightSearchApi + url,
+        url: environment.hipmunkApi + url,
         headers: new HttpHeaders({
-          "x-rapidapi-host": "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
-          "x-rapidapi-key": "ff0f457354msh218e17c93604837p10160bjsn391ad2e535e0",
-          "x-access-token": "6c5c9b9a3a1048180f89da0ff9cab702"
+          "x-rapidapi-host": "apidojo-hipmunk-v1.p.rapidapi.com",
+          "x-rapidapi-key": "ff0f457354msh218e17c93604837p10160bjsn391ad2e535e0"
         })
       });
     }

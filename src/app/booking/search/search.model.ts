@@ -1,4 +1,4 @@
-export interface Airport {
+export interface AirportResponse {
   airportId: string;
   code: string;
   name: string;

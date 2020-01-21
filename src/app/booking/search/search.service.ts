@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 
-import { Airport } from "./search.model";
+import { AirportResponse } from "./search.model";
 
 @Injectable()
 export class SearchService {
@@ -10,7 +10,7 @@ export class SearchService {
 
   public fetchAirports(searchQuery: string) {
     return this.http
-      .get<Airport[]>("airports/by-text", {
+      .get<AirportResponse[]>("airports/by-text", {
         params: {
           text: searchQuery
         }
