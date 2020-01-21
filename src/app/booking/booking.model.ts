@@ -170,7 +170,7 @@ export class BookingTicket {
   private getDuration(depart_iso: string, arrive_iso: string): string {
     const duration = new Date(arrive_iso).getTime() - new Date(depart_iso).getTime();
     const durationDate = new Date(duration);
-    const durationDays = durationDate.getUTCDay() - 1;
+    const durationDays = durationDate.getUTCDate() - 1;
     const durationHours = durationDate.getUTCHours() + durationDays * 24;
 
     return `${durationHours}h ${durationDate.getUTCMinutes()}m`;
