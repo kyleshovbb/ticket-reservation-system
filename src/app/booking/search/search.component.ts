@@ -1,42 +1,54 @@
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from "@angular/core";
 import { Subscription, pipe } from "rxjs";
 import { debounceTime, distinctUntilChanged, mergeMap, map } from "rxjs/operators";
 
 import { Option } from "src/app/shared/models/form.model";
 
+import { SearchType } from "../booking.model";
 import { SearchService } from "./search.service";
 import { BookingService } from "../booking.service";
 import { AirportResponse } from "./search.model";
 
-enum SearchTypeValue {
-  OneWay = "one-way",
-  RoundTrip = "round-trip"
-}
-
 @Component({
   selector: "app-booking-search",
   templateUrl: "./search.component.html",
-  styleUrls: ["./search.component.less"]
+  styleUrls: ["./search.component.less"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchComponent implements OnInit, OnDestroy {
   public searchForm: FormGroup;
-  public searchTypeValue = SearchTypeValue.RoundTrip;
   public searchTypeOptions: Option[] = [
     {
-      value: SearchTypeValue.RoundTrip,
+      value: SearchType.RoundTrip,
       label: "Round Trip"
     },
     {
-      value: SearchTypeValue.OneWay,
+      value: SearchType.OneWay,
       label: "One way"
     }
   ];
 
   private subs = new Subscription();
 
+  private _searchTypeValue = SearchType.RoundTrip;
   private _fromAirportOptions: Option[] = [];
   private _toAirportOptions: Option[] = [];
+
+  public get searchTypeValue() {
+    return this._searchTypeValue;
+  }
+
+  public set searchTypeValue(searchType: SearchType) {
+    this._searchTypeValue = searchType;
+
+    if (searchType === SearchType.OneWay) {
+      console.log(searchType);
+      this.searchForm.controls["returnDate"].reset();
+    }
+
+    this.cdr.markForCheck();
+  }
 
   public get fromAirportOptions() {
     return this._fromAirportOptions;
@@ -57,7 +69,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   public get roundTripDateIsDisabled() {
-    return this.searchTypeValue === SearchTypeValue.OneWay;
+    return this.searchTypeValue === SearchType.OneWay;
   }
 
   constructor(

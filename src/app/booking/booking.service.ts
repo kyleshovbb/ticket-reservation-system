@@ -27,6 +27,8 @@ export class BookingService {
   }
 
   private fetchTicketsList(params: SearchFormValue): Observable<BookingTicket[]> {
+    const isRoundTrip = !!params.returnDate;
+
     return this.http
       .get<BookingTicketResponse>("flights/create-session", {
         params: {
@@ -35,10 +37,18 @@ export class BookingService {
           date0: params.outboundDate,
           pax: String(params.adults),
           cabin: "Basic Coach|Coach|Premium Coach|Business|First|Air Taxi",
-          ...(params.returnDate ? { return_date: params.returnDate } : {})
+          ...(isRoundTrip ? this.getRoundTripParams(params) : {})
         }
       })
       .pipe(map(response => this.getBookingTickets(response)));
+  }
+
+  private getRoundTripParams(params: SearchFormValue) {
+    return {
+      from1: params.destinationPlace,
+      to1: params.originPlace,
+      date1: params.returnDate
+    };
   }
 
   private getBookingTickets(response: BookingTicketResponse): BookingTicket[] {

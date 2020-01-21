@@ -8,9 +8,10 @@ import { BookingService } from "./booking.service";
 import { SearchComponent } from "./search/search.component";
 import { BookingComponent } from "./booking.component";
 import { BookingRoutingModule } from "./booking-routing.module";
+import { TravelRouteComponent } from "./list/travel-route/travel-route.component";
 
 @NgModule({
-  declarations: [BookingComponent, SearchComponent, ListComponent],
+  declarations: [BookingComponent, SearchComponent, ListComponent, TravelRouteComponent],
   imports: [CommonModule, BookingRoutingModule, SharedModule],
   providers: [BookingService, SearchService]
 })

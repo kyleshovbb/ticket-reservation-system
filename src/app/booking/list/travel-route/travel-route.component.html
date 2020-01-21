@@ -1,0 +1,42 @@
+<div class="travel-route">
+  <div class="travel-route__airlines">
+    <div class="travel-route__airline" *ngFor="let equipmentItem of travelRoute.equipments">
+      <div class="travel-route__equipment">{{ equipmentItem.equipment }}</div>
+      <div class="travel-route__plane-code">{{ equipmentItem.planeCode }}</div>
+    </div>
+  </div>
+
+  <div class="travel-route__fly-info">
+    <ng-container
+      [ngTemplateOutlet]="airportInfo"
+      [ngTemplateOutletContext]="{ time: travelRoute.legInfo.depart_iso, airport: travelRoute.originAirport }"
+    ></ng-container>
+
+    <div class="travel-route__duration">
+      <div class="travel-route__duration-time">{{ travelRoute.duration }}</div>
+      <div class="travel-route__travel-line">
+        <div class="travel-route__travel-stop" *ngFor="let _empty of getEmptyArray(travelRoute.stops)"></div>
+      </div>
+
+      <div class="travel-route__stops-count" *ngIf="travelRoute.stops; else nonStops">
+        {{ travelRoute.stops }} Stops
+      </div>
+      <ng-template #nonStops>
+        <div class="travel-route__stops-count travel-route__non-stops">Non Stops</div>
+      </ng-template>
+    </div>
+
+    <ng-container
+      [ngTemplateOutlet]="airportInfo"
+      [ngTemplateOutletContext]="{ time: travelRoute.legInfo.arrive_iso, airport: travelRoute.departAirport }"
+    ></ng-container>
+  </div>
+</div>
+
+<ng-template #airportInfo let-time="time" let-airport="airport">
+  <div class="travel-route__info">
+    <div class="travel-route__time">{{ time | date: "shortTime" }}</div>
+    <div class="travel-route__date">{{ time | date: "MMM d, EEE" }}</div>
+    <div class="travel-route__airport">{{ airport.name | uppercase }} {{ airport.code | uppercase }}</div>
+  </div>
+</ng-template>

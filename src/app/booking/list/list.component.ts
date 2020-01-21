@@ -15,8 +15,4 @@ export class ListComponent {
   constructor(bookingService: BookingService) {
     this.bookingTickets$ = bookingService.bookingTickets$;
   }
-
-  public getEmptyArray(count: number) {
-    return new Array(count);
-  }
 }

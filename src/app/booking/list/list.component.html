@@ -1,36 +1,7 @@
 <div class="tickets" *ngIf="bookingTickets$ | async as tickets">
   <div class="tickets__ticket" *ngFor="let ticket of tickets">
-    <div class="tickets__ticket-info">
-      <div class="tickets__airlines">
-        <div class="tickets__airline" *ngFor="let equipmentItem of ticket.equipments">
-          <div class="tickets__equipment">{{ equipmentItem.equipment }}</div>
-          <div class="tickets__plane-code">{{ equipmentItem.planeCode }}</div>
-        </div>
-      </div>
-
-      <div class="tickets__fly-info">
-        <ng-container
-          [ngTemplateOutlet]="airportInfo"
-          [ngTemplateOutletContext]="{ time: ticket.legInfo.depart_iso, airport: ticket.originAirport }"
-        ></ng-container>
-
-        <div class="tickets__duration">
-          <div class="tickets__duration-time">{{ ticket.duration }}</div>
-          <div class="tickets__travel-line">
-            <div class="tickets__travel-stop" *ngFor="let _empty of getEmptyArray(ticket.stops)"></div>
-          </div>
-
-          <div class="tickets__stops-count" *ngIf="ticket.stops; else nonStops">{{ ticket.stops }} Stops</div>
-          <ng-template #nonStops>
-            <div class="tickets__stops-count tickets__non-stops">Non Stops</div>
-          </ng-template>
-        </div>
-
-        <ng-container
-          [ngTemplateOutlet]="airportInfo"
-          [ngTemplateOutletContext]="{ time: ticket.legInfo.arrive_iso, airport: ticket.departAirport }"
-        ></ng-container>
-      </div>
+    <div class="tickets__routes">
+      <app-travel-route [travelRoute]="travelRoute" *ngFor="let travelRoute of ticket.travelRoutes"></app-travel-route>
     </div>
 
     <div class="tickets__ticket-book-container">
@@ -39,11 +10,3 @@
     </div>
   </div>
 </div>
-
-<ng-template #airportInfo let-time="time" let-airport="airport">
-  <div class="tickets__info">
-    <div class="tickets__time">{{ time | date: "shortTime" }}</div>
-    <div class="tickets__date">{{ time | date: "MMM d, EEE" }}</div>
-    <div class="tickets__airport">{{ airport.name | uppercase }} {{ airport.code | uppercase }}</div>
-  </div>
-</ng-template>

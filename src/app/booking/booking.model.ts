@@ -20,6 +20,9 @@ export interface BookingTicketResponse {
   equipments: {
     [planeCode: string]: string;
   };
+  search: {
+    sub_kind: SearchType;
+  };
   airports: {
     [airportCode: string]: Airport;
   };
@@ -30,6 +33,11 @@ export interface BookingTicketResponse {
   legs: {
     [iden: string]: Leg;
   };
+}
+
+export enum SearchType {
+  OneWay = "oneway",
+  RoundTrip = "roundtrip"
 }
 
 interface Ticket {
@@ -99,12 +107,10 @@ interface Leg {
   operating_num: [string, number];
 }
 
-export class BookingTicket {
-  ticketInfo: Ticket;
+export interface TravelRoute {
   legs: Leg[];
   legInfo: Leg;
   stops: number;
-  currency: Currency;
   originAirport: Airport;
   departAirport: Airport;
   duration: string;
@@ -112,20 +118,37 @@ export class BookingTicket {
     equipment: string;
     planeCode: string;
   }[];
+}
+
+export class BookingTicket {
+  searchType: SearchType;
+  currency: Currency;
+  ticketInfo: Ticket;
+  travelRoutes: TravelRoute[];
 
   constructor(response: BookingTicketResponse, ticketIden: string) {
-    const ticketInfo = response.itins[ticketIden];
-    const routing = this.getRoutingByIden(response, ticketInfo.routing_idens[0]);
-
-    this.ticketInfo = ticketInfo;
-    this.legs = this.getLegsByIden(response, routing.leg_idens);
-    this.legInfo = this.getLegInfoByLegs(this.legs);
-    this.stops = this.legs.length - 1;
+    this.searchType = response.search.sub_kind;
     this.currency = response.currency;
-    this.equipments = this.getEquipmentsByLegs(response, this.legs);
-    this.originAirport = this.getAirportByCode(response, this.legInfo.from_code);
-    this.departAirport = this.getAirportByCode(response, this.legInfo.to_code);
-    this.duration = this.getDuration(this.legInfo.depart_iso, this.legInfo.arrive_iso);
+    this.ticketInfo = response.itins[ticketIden];
+    this.travelRoutes = this.ticketInfo.routing_idens.map(routingIden =>
+      this.parseResponseByRoute(response, routingIden)
+    );
+  }
+
+  private parseResponseByRoute(response: BookingTicketResponse, routingIden: string): TravelRoute {
+    const routing = this.getRoutingByIden(response, routingIden);
+    const legs = this.getLegsByIden(response, routing.leg_idens);
+    const legInfo = this.getLegInfoByLegs(legs);
+
+    return {
+      legs,
+      legInfo,
+      stops: legs.length - 1,
+      equipments: this.getEquipmentsByLegs(response, legs),
+      originAirport: this.getAirportByCode(response, legInfo.from_code),
+      departAirport: this.getAirportByCode(response, legInfo.to_code),
+      duration: this.getDuration(legInfo.depart_iso, legInfo.arrive_iso)
+    };
   }
 
   private getRoutingByIden(response: BookingTicketResponse, routingIden: string): Routing {
