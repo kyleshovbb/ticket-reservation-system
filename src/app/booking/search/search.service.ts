@@ -15,6 +15,6 @@ export class SearchService {
           text: searchQuery
         }
       })
-      .pipe(map(airports => airports.slice(15)));
+      .pipe(map(airports => airports.slice(0, 15)));
   }
 }
