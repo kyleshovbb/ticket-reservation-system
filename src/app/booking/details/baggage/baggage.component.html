@@ -1,41 +1,46 @@
 <div class="baggage">
-  <h2 class="baggage__title">Baggage</h2>
-  <div class="baggage__info-container">
-    <div class="baggage__info" *ngFor="let baggage of baggages; let i = index">
-      <div class="baggage__name">{{ baggage.name }}</div>
-      <div class="baggage__description">{{ baggage.description }}</div>
-      <div class="baggage__price">{{ baggage.price === 0 ? "Free" : (baggage.price | currency: "USD") }}</div>
-      <div class="baggage__action">
-        <button class="baggage__delete-btn" *ngIf="baggage.isNotStatic" (click)="removeBaggage(i)">X</button>
+  <h2 class="baggage__title" [ngClass]="{ baggage__title_open: isOpen }" (click)="toggle()">
+    Baggage
+  </h2>
+
+  <div class="baggage__container" *ngIf="isOpen">
+    <div class="baggage__info-container">
+      <div class="baggage__info" *ngFor="let baggage of baggages; let i = index">
+        <div class="baggage__name">{{ baggage.name }}</div>
+        <div class="baggage__description">{{ baggage.description }}</div>
+        <div class="baggage__price">{{ baggage.price === 0 ? "Free" : (baggage.price | currency: "USD") }}</div>
+        <div class="baggage__action">
+          <button class="baggage__delete-btn" *ngIf="baggage.isNotStatic" (click)="removeBaggage(i)">X</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="baggage__field">
-    <div class="baggage__field-info baggage__countable-field-info">
-      <div class="baggage__field-name">Checked Baggage</div>
-      <div class="baggage__field-description">23 kg</div>
+    <div class="baggage__field">
+      <div class="baggage__field-info baggage__countable-field-info">
+        <div class="baggage__field-name">Checked Baggage</div>
+        <div class="baggage__field-description">23 kg</div>
+      </div>
+
+      <div class="baggage__count">
+        <app-input-number [(ngModel)]="baggageCount" [min]="1" [max]="10"></app-input-number>
+      </div>
+
+      <div class="baggage__selector-action">
+        <button class="baggage__add-btn btn btn-primary" (click)="addBaggage(baggageType.Checked, baggageCount)">
+          $80
+        </button>
+      </div>
     </div>
 
-    <div class="baggage__count">
-      <app-input-number [(ngModel)]="baggageCount" [min]="1" [max]="10"></app-input-number>
-    </div>
+    <div class="baggage__field">
+      <div class="baggage__field-info">
+        <div class="baggage__field-name">Sport Equipment</div>
+        <div class="baggage__field-description">Ski, Snowboard, Surf equipment, Bicycle, etc.</div>
+      </div>
 
-    <div class="baggage__selector-action">
-      <button class="baggage__add-btn btn btn-primary" (click)="addBaggage(baggageType.Checked, baggageCount)">
-        $80
-      </button>
-    </div>
-  </div>
-
-  <div class="baggage__field">
-    <div class="baggage__field-info">
-      <div class="baggage__field-name">Sport Equipment</div>
-      <div class="baggage__field-description">Ski, Snowboard, Surf equipment, Bicycle, etc.</div>
-    </div>
-
-    <div class="baggage__selector-action">
-      <button class="baggage__add-btn btn btn-primary" (click)="addBaggage(baggageType.SportEquipment)">$30</button>
+      <div class="baggage__selector-action">
+        <button class="baggage__add-btn btn btn-primary" (click)="addBaggage(baggageType.SportEquipment)">$30</button>
+      </div>
     </div>
   </div>
 </div>

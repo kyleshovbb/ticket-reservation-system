@@ -13,6 +13,11 @@ export class BaggageComponent {
 
   public baggageType = BaggageType;
   public baggageCount = 1;
+  public isOpen = false;
+
+  public toggle() {
+    this.isOpen = !this.isOpen;
+  }
 
   public addBaggage(baggageType: BaggageType, count = 1) {
     const baggages = new Array(count).fill(this.getBaggageByType(baggageType));
