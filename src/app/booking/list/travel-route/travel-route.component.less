@@ -1,0 +1,114 @@
+@import "../../../../style/theme.less";
+
+:host {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid @disable-color;
+
+  &:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.travel-route {
+  display: flex;
+
+  &__airline:not(:first-child) {
+    margin-top: 10px;
+  }
+
+  &__airlines {
+    color: @disable-color;
+    flex: 1;
+    font-size: 14px;
+  }
+
+  &__airline:not(:first-child) {
+    margin-top: 10px;
+  }
+
+  &__fly-info {
+    flex: 3;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  &__info,
+  &__duration {
+    -webkit-box-flex: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    align-items: center;
+  }
+
+  &__travel-line {
+    display: flex;
+    position: relative;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 2px;
+    margin: 10px;
+    background-color: @disable-color;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 8px;
+      height: 8px;
+      top: -3px;
+      border-radius: 50%;
+      background-color: @disable-color;
+    }
+
+    &::before {
+      left: 0;
+    }
+
+    &::after {
+      right: 0;
+    }
+  }
+
+  &__travel-stop {
+    position: relative;
+    width: 6px;
+    height: 6px;
+    background-color: @primary-color;
+    border-radius: 50%;
+    top: -2px;
+  }
+
+  &__stops-count {
+    font-size: 12px;
+    font-weight: 600;
+    color: @primary-color;
+  }
+
+  &__non-stops {
+    color: @disable-color;
+  }
+
+  &__time {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  &__date {
+    color: @disable-color;
+  }
+
+  &__airport {
+    margin-top: 13px;
+    font-weight: 600;
+    font-size: 12px;
+  }
+}

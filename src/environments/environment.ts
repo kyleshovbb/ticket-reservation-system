@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  hipmunkApi: "https://apidojo-hipmunk-v1.p.rapidapi.com/",
   airportsFinderApi: "https://cometari-airportsfinder-v1.p.rapidapi.com/api/"
 };
 

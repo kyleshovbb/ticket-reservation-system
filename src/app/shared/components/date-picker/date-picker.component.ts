@@ -67,7 +67,9 @@ export class DatePickerComponent implements AfterViewInit, ControlValueAccessor 
 
   registerOnTouched(fn: Function) {}
 
-  writeValue(value: string) {}
+  writeValue(value: string) {
+    this.value = value;
+  }
 
   private _change = (value: string) => {};
 }

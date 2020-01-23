@@ -1,0 +1,12 @@
+<div class="tickets" *ngIf="bookingTickets$ | async as tickets">
+  <div class="tickets__ticket" *ngFor="let ticket of tickets">
+    <div class="tickets__routes">
+      <app-travel-route [travelRoute]="travelRoute" *ngFor="let travelRoute of ticket.travelRoutes"></app-travel-route>
+    </div>
+
+    <div class="tickets__ticket-book-container">
+      <div class="tickets__ticket-price">{{ ticket.ticketInfo.price | currency: ticket.currency.code }}</div>
+      <button class="btn btn-primary tickets__book-btn">Book</button>
+    </div>
+  </div>
+</div>

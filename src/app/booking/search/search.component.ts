@@ -1,42 +1,54 @@
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from "@angular/core";
 import { Subscription, pipe } from "rxjs";
 import { debounceTime, distinctUntilChanged, mergeMap, map } from "rxjs/operators";
 
 import { Option } from "src/app/shared/models/form.model";
 
-import { Airport } from "./search.model";
-import { HomeService } from "../home.service";
+import { SearchType } from "../booking.model";
 import { SearchService } from "./search.service";
-
-enum SearchTypeValue {
-  OneWay = "one-way",
-  RoundTrip = "round-trip"
-}
+import { BookingService } from "../booking.service";
+import { AirportResponse } from "./search.model";
 
 @Component({
-  selector: "app-home-search",
+  selector: "app-booking-search",
   templateUrl: "./search.component.html",
-  styleUrls: ["./search.component.less"]
+  styleUrls: ["./search.component.less"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchComponent implements OnInit, OnDestroy {
   public searchForm: FormGroup;
-  public searchTypeValue = SearchTypeValue.RoundTrip;
   public searchTypeOptions: Option[] = [
     {
-      value: SearchTypeValue.RoundTrip,
+      value: SearchType.RoundTrip,
       label: "Round Trip"
     },
     {
-      value: SearchTypeValue.OneWay,
+      value: SearchType.OneWay,
       label: "One way"
     }
   ];
 
   private subs = new Subscription();
 
+  private _searchTypeValue = SearchType.RoundTrip;
   private _fromAirportOptions: Option[] = [];
   private _toAirportOptions: Option[] = [];
+
+  public get searchTypeValue() {
+    return this._searchTypeValue;
+  }
+
+  public set searchTypeValue(searchType: SearchType) {
+    this._searchTypeValue = searchType;
+
+    if (searchType === SearchType.OneWay) {
+      console.log(searchType);
+      this.searchForm.controls["returnDate"].reset();
+    }
+
+    this.cdr.markForCheck();
+  }
 
   public get fromAirportOptions() {
     return this._fromAirportOptions;
@@ -57,26 +69,26 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   public get roundTripDateIsDisabled() {
-    return this.searchTypeValue === SearchTypeValue.OneWay;
+    return this.searchTypeValue === SearchType.OneWay;
   }
 
   constructor(
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
-    private homeService: HomeService,
+    private homeService: BookingService,
     private searchService: SearchService
   ) {
     this.searchForm = this.fb.group({
-      fromPlace: ["", Validators.required],
-      toPlace: ["", Validators.required],
-      depart: ["", Validators.required],
-      return: [""],
-      ticketCount: ["", Validators.required]
+      originPlace: ["", Validators.required],
+      destinationPlace: ["", Validators.required],
+      outboundDate: ["", Validators.required],
+      returnDate: [""],
+      adults: ["", Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.subs.add(this.handleFromPlaceValueChanges()).add(this.handleToPlaceValueChanges());
+    this.subs.add(this.handleOriginPlaceValueChanges()).add(this.handleDestinationPlaceValueChanges());
   }
 
   ngOnDestroy(): void {
@@ -84,21 +96,23 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit() {
-    this.homeService.loadTickets(this.searchForm.value).subscribe();
+    this.homeService.loadTicketsList(this.searchForm.value).subscribe();
   }
 
-  private handleFromPlaceValueChanges() {
-    return this.searchForm.controls["fromPlace"].valueChanges
+  private handleOriginPlaceValueChanges() {
+    return this.searchForm.controls["originPlace"].valueChanges
       .pipe(this.fetchAirportsOptionsPipe())
       .subscribe(options => {
         this.fromAirportOptions = options;
       });
   }
 
-  private handleToPlaceValueChanges() {
-    return this.searchForm.controls["toPlace"].valueChanges.pipe(this.fetchAirportsOptionsPipe()).subscribe(options => {
-      this.toAirportOptions = options;
-    });
+  private handleDestinationPlaceValueChanges() {
+    return this.searchForm.controls["destinationPlace"].valueChanges
+      .pipe(this.fetchAirportsOptionsPipe())
+      .subscribe(options => {
+        this.toAirportOptions = options;
+      });
   }
 
   private fetchAirportsOptionsPipe() {
@@ -110,10 +124,10 @@ export class SearchComponent implements OnInit, OnDestroy {
     );
   }
 
-  private parseAirportsToOptions(airports: Airport[]): Option[] {
+  private parseAirportsToOptions(airports: AirportResponse[]): Option[] {
     return airports.map(airport => ({
       label: `${airport.name} (${airport.code})`,
-      value: `${airport.name} (${airport.code})`
+      value: airport.code
     }));
   }
 }
