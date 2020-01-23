@@ -5,13 +5,13 @@ import { debounceTime, distinctUntilChanged, mergeMap, map } from "rxjs/operator
 
 import { Option } from "src/app/shared/models/form.model";
 
-import { SearchType } from "../booking.model";
+import { SearchType } from "../../booking.model";
 import { SearchService } from "./search.service";
-import { BookingService } from "../booking.service";
 import { AirportResponse } from "./search.model";
+import { TicketsListService } from "../tickets-list.service";
 
 @Component({
-  selector: "app-booking-search",
+  selector: "app-booking-tickets-list-search",
   templateUrl: "./search.component.html",
   styleUrls: ["./search.component.less"],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -74,7 +74,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
-    private homeService: BookingService,
+    private homeService: TicketsListService,
     private searchService: SearchService
   ) {
     this.searchForm = this.fb.group({

@@ -1,0 +1,107 @@
+@import "../../../../style/theme.less";
+
+.baggage {
+  &__title {
+    padding-left: 15px;
+    border-left: 4px solid @primary-color;
+    margin-bottom: 20px;
+    font-size: 18px;
+    border-radius: 3px;
+  }
+
+  &__info-container {
+    border: 3px solid @main-background-color;
+    border-radius: 3px;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+  }
+
+  &__name,
+  &__description,
+  &__field-name,
+  &__field-description,
+  &__sport-field .baggage__field-name:after {
+    flex: 5;
+    font-size: 14px;
+  }
+
+  &__name,
+  &__price,
+  &__field-name {
+    font-weight: 600;
+  }
+
+  &__description,
+  &__field-description {
+    color: @disable-color;
+  }
+
+  &__price {
+    flex: 1;
+  }
+
+  &__action {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__delete-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -12px;
+    right: -12px;
+    width: 24px;
+    height: 24px;
+    color: @white;
+    background-color: @disable-color;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &:active,
+    &:focus {
+      box-shadow: none;
+      outline: 0;
+    }
+  }
+
+  &__field {
+    display: flex;
+    margin-top: 15px;
+  }
+
+  &__field-info {
+    display: flex;
+    flex: 10;
+    padding: 10px 15px;
+    border-radius: 3px;
+    background-color: @main-background-color;
+  }
+
+  &__field-info,
+  &__description {
+    margin-right: 15px;
+  }
+
+  &__sport-field .baggage__field-name:after {
+    display: block;
+    content: "";
+  }
+
+  &__selector-action {
+    flex: 1;
+
+    &:after {
+      display: block;
+      content: "";
+      flex: 1;
+    }
+  }
+}

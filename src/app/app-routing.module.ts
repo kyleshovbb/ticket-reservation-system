@@ -9,8 +9,12 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: "",
+        path: "booking",
         loadChildren: () => import("./booking/booking.module").then(m => m.BookingModule)
+      },
+      {
+        path: "**",
+        redirectTo: "booking"
       }
     ]
   }
