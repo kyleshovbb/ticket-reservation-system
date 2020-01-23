@@ -7,7 +7,7 @@ export enum BaggageType {
 export interface Baggage {
   type: BaggageType;
   name: string;
-  description?: string;
   price: number;
+  description: string;
   isNotStatic: boolean;
 }

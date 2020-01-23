@@ -14,9 +14,9 @@ export class BaggageComponent {
   public baggageType = BaggageType;
   public baggageCount = 1;
 
-  public addBaggage(baggageType: BaggageType) {
-    const baggage = this.getBaggageByType(baggageType);
-    this.baggagesChange.emit([...this.baggages, baggage]);
+  public addBaggage(baggageType: BaggageType, count = 1) {
+    const baggages = new Array(count).fill(this.getBaggageByType(baggageType));
+    this.baggagesChange.emit([...this.baggages, ...baggages]);
   }
 
   public removeBaggage(index: number) {
@@ -42,6 +42,7 @@ export class BaggageComponent {
           type: BaggageType.SportEquipment,
           name: "Sport Equipment",
           price: 30,
+          description: "Ski, Snowboard, Surf equipment, Bicycle, etc.",
           isNotStatic: true
         };
       }

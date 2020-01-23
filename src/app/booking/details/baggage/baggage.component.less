@@ -23,8 +23,7 @@
   &__name,
   &__description,
   &__field-name,
-  &__field-description,
-  &__sport-field .baggage__field-name:after {
+  &__field-description {
     flex: 5;
     font-size: 14px;
   }
@@ -85,23 +84,39 @@
     background-color: @main-background-color;
   }
 
+  &__countable-field-info {
+    flex: 9;
+
+    .baggage__field-description {
+      flex: 4;
+    }
+  }
+
   &__field-info,
   &__description {
     margin-right: 15px;
   }
 
-  &__sport-field .baggage__field-name:after {
-    display: block;
-    content: "";
+  &__selector-action,
+  &__count {
+    display: flex;
+    align-items: center;
   }
 
   &__selector-action {
-    flex: 1;
+    flex: 2;
+  }
 
-    &:after {
-      display: block;
-      content: "";
-      flex: 1;
+  &__count {
+    flex: 1;
+  }
+
+  ::ng-deep app-input-number .input-number {
+    margin-bottom: 0;
+    margin-right: 15px;
+
+    &__field {
+      width: 100%;
     }
   }
 }
