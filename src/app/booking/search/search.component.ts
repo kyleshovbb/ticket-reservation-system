@@ -43,7 +43,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     this._searchTypeValue = searchType;
 
     if (searchType === SearchType.OneWay) {
-      console.log(searchType);
       this.searchForm.controls["returnDate"].reset();
     }
 

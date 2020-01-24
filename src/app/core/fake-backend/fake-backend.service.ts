@@ -1,18 +1,20 @@
 import { Injectable } from "@angular/core";
-import { HttpResponse } from "@angular/common/http";
+import { HttpResponse, HttpParams } from "@angular/common/http";
 import { of, throwError } from "rxjs";
 
 import { User } from "./fake-backend.model";
 import { LoginRequest } from "../models/auth.model";
+import { TicketsSearch } from "./repositories/tickets.model";
+import { TicketsRepository } from "./repositories/tickets.repository";
 
 enum StorageKeys {
   Users = "users"
 }
 
-@Injectable({ providedIn: "root" })
+@Injectable()
 export class FakeBackendService {
-  private users: User[] =
-    JSON.parse(localStorage.getItem(StorageKeys.Users)) || [];
+  private users: User[] = JSON.parse(localStorage.getItem(StorageKeys.Users)) || [];
+  private ticketsRepository = new TicketsRepository();
 
   public register(user: User) {
     this.users.push(user);
@@ -41,10 +43,19 @@ export class FakeBackendService {
     );
   }
 
-  public login(body: LoginRequest) {
-    const user = this.users.find(
-      user => user.password === body.password && body.username === user.username
+  public getTickets(params: HttpParams) {
+    this.ticketsRepository.generateTickets(this.parseParams(params));
+
+    return of(
+      new HttpResponse({
+        status: 201,
+        body: this.ticketsRepository.getAll()
+      })
     );
+  }
+
+  public login(body: LoginRequest) {
+    const user = this.users.find(user => user.password === body.password && body.username === user.username);
 
     return !!user
       ? of(
@@ -61,5 +72,15 @@ export class FakeBackendService {
             }
           })
         );
+  }
+
+  private parseParams(params: HttpParams): TicketsSearch {
+    return {
+      origin: params.get("origin"),
+      destination: params.get("destination"),
+      departDate: params.get("departDate"),
+      pax: params.get("pax"),
+      returnDate: params.get("returnDate")
+    };
   }
 }

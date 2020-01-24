@@ -14,11 +14,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
   }
 
   private handleRoute(req: HttpRequest<any>, next: HttpHandler) {
-    const { url, method, body } = req;
+    const { url, method, body, params } = req;
 
     switch (true) {
       case url.endsWith("check-auth") && method === "GET":
         return this.fakeBackendService.checkUser();
+      case url.endsWith("flights/create-session") && method === "GET":
+        return this.fakeBackendService.getTickets(params);
       case url.endsWith("logout") && method === "GET":
         return this.fakeBackendService.logout();
       case url.endsWith("login") && method === "POST":
