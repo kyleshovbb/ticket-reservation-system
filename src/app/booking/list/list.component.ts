@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { Observable } from "rxjs";
 
-import { BookingTicket } from "../booking.model";
+import { Tickets } from "../booking.model";
 import { BookingService } from "../booking.service";
 
 @Component({
@@ -10,7 +10,7 @@ import { BookingService } from "../booking.service";
   styleUrls: ["./list.component.less"]
 })
 export class ListComponent {
-  public bookingTickets$: Observable<BookingTicket[]>;
+  public bookingTickets$: Observable<Tickets>;
 
   constructor(bookingService: BookingService) {
     this.bookingTickets$ = bookingService.bookingTickets$;
