@@ -21,7 +21,9 @@ export class InfoComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.saveLegends(changes.legends.currentValue);
+    if (changes.legends) {
+      this.saveLegends(changes.legends.currentValue);
+    }
   }
 
   private saveLegends(legends: Legends): void {

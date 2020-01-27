@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from "@angular/core";
 
-import { SeatsMap, Characteristic, SeatLocation } from "src/app/core/models/seats-map.model";
+import { SeatsMap, Characteristic, SeatLocation, Seat } from "src/app/core/models/seats-map.model";
 
 @Component({
   selector: "app-seats-map",
@@ -10,7 +10,14 @@ import { SeatsMap, Characteristic, SeatLocation } from "src/app/core/models/seat
 })
 export class SeatsMapComponent {
   @Input() seatsMap: SeatsMap;
+  @Output() selectSeat = new EventEmitter();
 
   public seatLocation = SeatLocation;
   public characteristic = Characteristic;
+
+  public onSelectSeat(seat: Seat) {
+    if (!seat.isOccupied) {
+      this.selectSeat.emit(seat);
+    }
+  }
 }

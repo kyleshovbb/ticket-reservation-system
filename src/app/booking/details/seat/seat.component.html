@@ -6,7 +6,7 @@
   <div class="seat__container" *ngIf="isOpen">
     <ng-container *ngIf="seatsMap$ | async as seatsMap">
       <app-seat-info [legends]="seatsMap.legends" [selectedSeat]="selectedSeat"></app-seat-info>
-      <app-seats-map [seatsMap]="seatsMap" (seatNumberSelected)="seatNumberSelected($event)"></app-seats-map>
+      <app-seats-map [seatsMap]="seatsMap" (selectSeat)="selectSeat($event)"></app-seats-map>
     </ng-container>
   </div>
 </div>
