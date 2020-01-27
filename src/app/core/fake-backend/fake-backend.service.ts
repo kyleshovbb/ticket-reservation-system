@@ -50,6 +50,15 @@ export class FakeBackendService {
     );
   }
 
+  public getTicket(id: string) {
+    return of(
+      new HttpResponse({
+        status: 201,
+        body: this.ticketsRepository.getOne(id)
+      })
+    );
+  }
+
   public login(body: LoginRequest) {
     const user = this.usersRepository.authentication(body);
 

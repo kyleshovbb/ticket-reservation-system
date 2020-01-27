@@ -2,9 +2,9 @@ import { ActivatedRoute } from "@angular/router";
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { Observable } from "rxjs";
 
-import { Baggage, BaggageType } from "./baggage/baggage.model";
-import { BookingTicket } from "../booking.model";
+import { Ticket } from "../booking.model";
 import { DetailsService } from "./details.service";
+import { Baggage, BaggageType } from "./baggage/baggage.model";
 
 @Component({
   selector: "app-booking-details",
@@ -13,7 +13,7 @@ import { DetailsService } from "./details.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailsComponent implements OnInit {
-  public ticketDetails$: Observable<BookingTicket>;
+  public ticketDetails$: Observable<Ticket>;
   public baggages: Baggage[] = [
     {
       type: BaggageType.Default,
@@ -29,7 +29,7 @@ export class DetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // const queryParams = this.route.snapshot.queryParams;
-    // this.detailsService.loadTicketDetails(queryParams).subscribe();
+    const id = this.route.snapshot.params["id"];
+    this.detailsService.loadTicketDetails(id).subscribe();
   }
 }

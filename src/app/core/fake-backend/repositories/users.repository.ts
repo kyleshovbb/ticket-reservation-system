@@ -2,12 +2,12 @@ import { LoginRequest } from "src/app/core/models/auth.model";
 
 import { Users, User } from "../models/user.model";
 
-enum StorageKeys {
+enum UsersStorageKeys {
   Users = "users"
 }
 
 export class UsersRepository {
-  private _users: Users = JSON.parse(localStorage.getItem(StorageKeys.Users)) || [];
+  private _users: Users = JSON.parse(localStorage.getItem(UsersStorageKeys.Users)) || [];
 
   constructor() {}
 
@@ -20,7 +20,7 @@ export class UsersRepository {
   public createUser(user: User): boolean {
     try {
       this._users.push(user);
-      localStorage.setItem(StorageKeys.Users, JSON.stringify(this._users));
+      localStorage.setItem(UsersStorageKeys.Users, JSON.stringify(this._users));
       return true;
     } catch (e) {
       return false;

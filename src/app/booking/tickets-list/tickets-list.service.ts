@@ -3,11 +3,12 @@ import { HttpClient } from "@angular/common/http";
 import { Subject, of, Observable } from "rxjs";
 import { tap, catchError, map } from "rxjs/operators";
 
+import { Ticket, Tickets } from "../booking.model";
 import { SearchFormValue } from "./search/search.model";
 
 @Injectable()
 export class TicketsListService {
-  private ticketsListSubject = new Subject<BookingTicket[]>();
+  private ticketsListSubject = new Subject<Tickets>();
 
   public get ticketsList$() {
     return this.ticketsListSubject.asObservable();

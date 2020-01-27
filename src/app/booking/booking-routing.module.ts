@@ -6,7 +6,7 @@ import { TicketsListComponent } from "./tickets-list/tickets-list.component";
 
 const routes: Routes = [
   {
-    path: "details",
+    path: "details/:id",
     component: DetailsComponent
   },
   {

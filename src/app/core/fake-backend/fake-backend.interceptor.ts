@@ -21,6 +21,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return this.fakeBackendService.checkUser();
       case url.endsWith("flights/create-session") && method === "GET":
         return this.fakeBackendService.getTickets(params);
+      case url.includes("flights/book") && method === "GET":
+        const splitUrl = url.split("/");
+        const id = splitUrl[splitUrl.length - 1];
+        return this.fakeBackendService.getTicket(id);
       case url.endsWith("logout") && method === "GET":
         return this.fakeBackendService.logout();
       case url.endsWith("login") && method === "POST":
