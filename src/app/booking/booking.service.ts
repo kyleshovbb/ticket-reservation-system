@@ -19,7 +19,6 @@ export class BookingService {
   public loadTicketsList(params: SearchFormValue) {
     return this.fetchTicketsList(params).pipe(
       tap(tickets => {
-        console.log(tickets);
         this.bookingTicketsSubject.next(tickets);
       }),
       catchError(() => of({}))
