@@ -56,12 +56,13 @@
   }
 
   &__seat-pass {
-    &_left {
-      margin-left: 13px;
-    }
-
-    &_right {
+    &_aisle {
       margin-right: 13px;
+
+      & ~ .seats-map__seat-pass_aisle {
+        margin-left: 13px;
+        margin-right: 3px;
+      }
     }
   }
 

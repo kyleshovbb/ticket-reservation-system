@@ -1,4 +1,6 @@
-export interface SeatsMap {
+export type SeatMaps = SeatMap[];
+
+export interface SeatMap {
   plane: string;
   columns: Column[];
   rows: Row[];

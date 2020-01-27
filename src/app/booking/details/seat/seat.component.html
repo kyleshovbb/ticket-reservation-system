@@ -4,6 +4,6 @@
   </h2>
 
   <div class="seat__container" *ngIf="isOpen">
-    <app-seats-map (seatNumberSelected)="seatNumberSelected($event)"></app-seats-map>
+    <app-seats-map [seatsMap]="seatsMap$ | async" (seatNumberSelected)="seatNumberSelected($event)"></app-seats-map>
   </div>
 </div>

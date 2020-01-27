@@ -1,22 +1,30 @@
 import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { of, Observable, ReplaySubject } from "rxjs";
+import { tap, catchError } from "rxjs/operators";
 
-import { PlaneSeatMap, SeatStatus } from "./seats-map.model";
+import { SeatMap } from "src/app/core/fake-backend/models/seat-map.model";
 
 @Injectable()
 export class SeatsMapService {
-  public planeSeatMap: PlaneSeatMap = new PlaneSeatMap();
+  private seatsMapSubject = new ReplaySubject<SeatMap>(1);
 
-  constructor() {
-    this.bookRandomSeats();
+  get seatsMap$() {
+    return this.seatsMapSubject.asObservable();
   }
 
-  private bookRandomSeats() {
-    this.planeSeatMap.seatRows.forEach(seatRow => {
-      seatRow.seats.forEach(seat => {
-        if (Math.random() < 0.3) {
-          seat.status = SeatStatus.Occupied;
-        }
-      });
-    });
+  constructor(private http: HttpClient) {}
+
+  public loadSeatsMap(plane: string) {
+    return this.fetchSeatsMap(plane).pipe(
+      tap(seatMap => {
+        this.seatsMapSubject.next(seatMap);
+      }),
+      catchError(() => of({}))
+    );
+  }
+
+  private fetchSeatsMap(plane: string): Observable<SeatMap> {
+    return this.http.get<SeatMap>(`flights/seat-map/${plane}`);
   }
 }

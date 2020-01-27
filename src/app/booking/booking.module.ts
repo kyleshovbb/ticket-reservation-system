@@ -10,11 +10,10 @@ import { SeatsMapService } from "./details/seat/seats-map/seats-map.service";
 import { DetailsComponent } from "./details/details.component";
 import { BaggageComponent } from "./details/baggage/baggage.component";
 import { SeatsMapComponent } from "./details/seat/seats-map/seats-map.component";
-import { BookingRoutingModule } from "./booking-routing.module";
 import { TicketsListService } from "./tickets-list/tickets-list.service";
+import { BookingRoutingModule } from "./booking-routing.module";
 import { TicketsListComponent } from "./tickets-list/tickets-list.component";
 import { TravelRouteComponent } from "./tickets-list/travel-route/travel-route.component";
-import { InfoComponent } from './details/seat/info/info.component';
 
 @NgModule({
   declarations: [
@@ -22,10 +21,9 @@ import { InfoComponent } from './details/seat/info/info.component';
     SearchComponent,
     DetailsComponent,
     BaggageComponent,
-    TicketsListComponent,
-    TravelRouteComponent,
     SeatsMapComponent,
-    InfoComponent
+    TicketsListComponent,
+    TravelRouteComponent
   ],
   imports: [CommonModule, BookingRoutingModule, SharedModule],
   providers: [TicketsListService, SearchService, DetailsService, SeatsMapService]

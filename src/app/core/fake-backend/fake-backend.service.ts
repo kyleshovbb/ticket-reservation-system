@@ -7,10 +7,12 @@ import { LoginRequest } from "../models/auth.model";
 import { TicketsSearch } from "./models/ticket.model";
 import { UsersRepository } from "./repositories/users.repository";
 import { TicketsRepository } from "./repositories/tickets.repository";
+import { SeatMapRepository } from "./repositories/seat-map.repository";
 
 @Injectable()
 export class FakeBackendService {
   private usersRepository = new UsersRepository();
+  private seatMapRepository = new SeatMapRepository();
   private ticketsRepository = new TicketsRepository();
 
   public register(user: User) {
@@ -55,6 +57,15 @@ export class FakeBackendService {
       new HttpResponse({
         status: 201,
         body: this.ticketsRepository.getOne(id)
+      })
+    );
+  }
+
+  public getSeatMap(plane: string) {
+    return of(
+      new HttpResponse({
+        status: 201,
+        body: this.seatMapRepository.getOne(plane)
       })
     );
   }

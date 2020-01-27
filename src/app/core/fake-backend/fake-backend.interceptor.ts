@@ -15,6 +15,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
   private handleRoute(req: HttpRequest<any>, next: HttpHandler) {
     const { url, method, body, params } = req;
+    const splitUrl = url.split("/");
 
     switch (true) {
       case url.endsWith("check-auth") && method === "GET":
@@ -22,9 +23,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       case url.endsWith("flights/create-session") && method === "GET":
         return this.fakeBackendService.getTickets(params);
       case url.includes("flights/book") && method === "GET":
-        const splitUrl = url.split("/");
         const id = splitUrl[splitUrl.length - 1];
         return this.fakeBackendService.getTicket(id);
+      case url.includes("flights/seat-map") && method === "GET":
+        const plane = splitUrl[splitUrl.length - 1];
+        return this.fakeBackendService.getSeatMap(plane);
       case url.endsWith("logout") && method === "GET":
         return this.fakeBackendService.logout();
       case url.endsWith("login") && method === "POST":
