@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 
 import { SharedModule } from "../shared/shared.module";
 import { SeatComponent } from "./details/seat/seat.component";
+import { InfoComponent } from "./details/seat/info/info.component";
 import { SearchService } from "./tickets-list/search/search.service";
 import { DetailsService } from "./details/details.service";
 import { SearchComponent } from "./tickets-list/search/search.component";
@@ -17,6 +18,7 @@ import { TravelRouteComponent } from "./tickets-list/travel-route/travel-route.c
 
 @NgModule({
   declarations: [
+    InfoComponent,
     SeatComponent,
     SearchComponent,
     DetailsComponent,

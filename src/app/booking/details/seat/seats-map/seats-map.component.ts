@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
 
-import { SeatsMap, Characteristic, SeatLocation } from "./seats-map.model";
+import { SeatsMap, Characteristic, SeatLocation } from "src/app/core/models/seats-map.model";
 
 @Component({
   selector: "app-seats-map",

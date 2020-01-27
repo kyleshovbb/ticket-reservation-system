@@ -4,10 +4,10 @@ import { Subscription, pipe } from "rxjs";
 import { debounceTime, distinctUntilChanged, mergeMap, map } from "rxjs/operators";
 
 import { Option } from "src/app/shared/models/form.model";
+import { SearchType } from "src/app/core/models/tickets.model";
+import { AirportResponse } from "src/app/core/models/search.model";
 
-import { SearchType } from "../../booking.model";
 import { SearchService } from "./search.service";
-import { AirportResponse } from "./search.model";
 import { TicketsListService } from "../tickets-list.service";
 
 @Component({

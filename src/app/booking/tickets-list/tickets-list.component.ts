@@ -1,8 +1,8 @@
-import { Router } from "@angular/router";
 import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { Observable } from "rxjs";
 
-import { Tickets } from "../booking.model";
+import { Tickets } from "src/app/core/models/tickets.model";
+
 import { TicketsListService } from "./tickets-list.service";
 
 @Component({

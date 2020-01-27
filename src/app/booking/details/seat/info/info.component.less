@@ -1,0 +1,68 @@
+@import "../../../../../style/theme.less";
+
+:host {
+  width: 100%;
+}
+
+.seat-info {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  &__selected-seat {
+    font-size: 18px;
+    width: 100%;
+    position: relative;
+    margin-bottom: 20px;
+    border-radius: 3px;
+    padding: 10px 15px;
+    background-color: @primary-transparent-color;
+    box-sizing: border-box;
+  }
+
+  &__legend {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 25px;
+    padding: 5px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: -25px;
+      top: 2px;
+      width: 20px;
+      height: 20px;
+      display: block;
+      border: 1px solid @border-color;
+      border-radius: 3px;
+      background-color: @white;
+    }
+
+    &_front {
+      &::before {
+        background-color: #efae00;
+      }
+    }
+
+    &_exit {
+      &::before {
+        background-color: #3c73d8;
+      }
+    }
+
+    &_selected {
+      &::before {
+        background-color: @primary-color;
+      }
+    }
+
+    &_occupied {
+      &::before {
+        background-color: @disable-darken-color;
+      }
+    }
+  }
+}

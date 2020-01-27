@@ -1,10 +1,8 @@
-export type SeatMaps = SeatMap[];
-
-export interface SeatMap {
+export interface SeatsMap {
   plane: string;
   columns: Column[];
   rows: Row[];
-  prices: Prices;
+  legends: Legends;
 }
 
 export interface Column {
@@ -24,8 +22,8 @@ export interface Row {
   seats: Seat[];
 }
 
-export type Prices = {
-  [key in Characteristic]: Price;
+export type Legends = {
+  [key in Characteristic]?: Price;
 };
 
 export interface Seat {
@@ -36,7 +34,7 @@ export interface Seat {
   characteristic: Characteristic;
 }
 
-interface Price {
+export interface Price {
   currency: string;
   amount: number;
 }

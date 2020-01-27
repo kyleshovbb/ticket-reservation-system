@@ -1,7 +1,8 @@
 import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { Observable } from "rxjs";
 
-import { AuthModalType } from "./auth-modal.model";
+import { AuthModalType } from "src/app/core/models/auth-modal.model";
+
 import { AuthModalService } from "./auth-modal.service";
 
 @Component({

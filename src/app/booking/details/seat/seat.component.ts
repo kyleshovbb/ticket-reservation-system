@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 
-import { SeatMap } from "src/app/core/fake-backend/models/seat-map.model";
+import { SeatsMap } from "src/app/core/models/seats-map.model";
 
 import { SeatsMapService } from "./seats-map/seats-map.service";
 
@@ -12,7 +12,8 @@ import { SeatsMapService } from "./seats-map/seats-map.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SeatComponent implements OnInit {
-  public seatsMap$: Observable<SeatMap>;
+  public seatsMap$: Observable<SeatsMap>;
+  public selectedSeat: string;
   public isOpen = false;
 
   constructor(private seatsMapService: SeatsMapService) {
@@ -28,6 +29,6 @@ export class SeatComponent implements OnInit {
   }
 
   public seatNumberSelected(seatNumber: string) {
-    console.log(seatNumber);
+    this.selectedSeat = seatNumber;
   }
 }

@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Subject, of, Observable } from "rxjs";
 import { tap, catchError } from "rxjs/operators";
 
-import { Ticket } from "../booking.model";
+import { Ticket } from "src/app/core/models/tickets.model";
 
 @Injectable()
 export class DetailsService {

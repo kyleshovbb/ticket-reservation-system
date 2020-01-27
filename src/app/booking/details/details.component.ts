@@ -2,7 +2,8 @@ import { ActivatedRoute } from "@angular/router";
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { Observable } from "rxjs";
 
-import { Ticket } from "../booking.model";
+import { Ticket } from "src/app/core/models/tickets.model";
+
 import { DetailsService } from "./details.service";
 import { Baggage, BaggageType } from "./baggage/baggage.model";
 

@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
 
-import { TravelRoute, Transfer } from "../../booking.model";
+import { TravelRoute, Transfer } from "src/app/core/models/tickets.model";
 
 @Component({
   selector: "app-travel-route",

@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { Observable } from "rxjs";
 
 import { UserService } from "src/app/core/services/user.service";
-import { AuthModalType } from "src/app/auth-modal/auth-modal.model";
+import { AuthModalType } from "src/app/core/models/auth-modal.model";
 import { AuthModalService } from "src/app/auth-modal/auth-modal.service";
 
 @Component({
@@ -14,10 +14,7 @@ import { AuthModalService } from "src/app/auth-modal/auth-modal.service";
 export class HeaderComponent {
   public isUserAuthenticated$: Observable<boolean>;
 
-  constructor(
-    private userService: UserService,
-    private authModalService: AuthModalService
-  ) {
+  constructor(private userService: UserService, private authModalService: AuthModalService) {
     this.isUserAuthenticated$ = this.userService.isAuthenticated$;
   }
 

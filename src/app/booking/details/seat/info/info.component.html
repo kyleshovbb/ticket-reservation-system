@@ -1,0 +1,21 @@
+<div class="seat-info">
+  <div class="seat-info__selected-seat">Selected seat: {{ selectedSeat || "---" }}</div>
+  <div class="seat-info__legend-info">
+    <ng-container
+      *ngFor="let seatPrice of seatPrices"
+      [ngTemplateOutlet]="seatInfo"
+      [ngTemplateOutletContext]="{
+        name: seatPrice.name,
+        price: seatPrice.price?.amount,
+        currency: seatPrice.price?.currency
+      }"
+    ></ng-container>
+  </div>
+</div>
+
+<ng-template #seatInfo let-name="name" let-price="price" let-currency="currency">
+  <div class="seat-info__legend" [ngClass]="['seat-info__legend_' + name]">
+    <div class="seat-info__legend-name">{{ name | titlecase }}</div>
+    <div class="seat-info__legend-price" *ngIf="price">{{ price | currency: currency }}</div>
+  </div>
+</ng-template>

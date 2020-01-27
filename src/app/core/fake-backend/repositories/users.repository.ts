@@ -1,6 +1,5 @@
+import { Users, User } from "src/app/core/models/user.model";
 import { LoginRequest } from "src/app/core/models/auth.model";
-
-import { Users, User } from "../models/user.model";
 
 enum UsersStorageKeys {
   Users = "users"

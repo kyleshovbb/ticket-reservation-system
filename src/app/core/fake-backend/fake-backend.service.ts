@@ -2,9 +2,10 @@ import { Injectable } from "@angular/core";
 import { HttpResponse, HttpParams } from "@angular/common/http";
 import { of, throwError } from "rxjs";
 
-import { User } from "./models/user.model";
+import { User } from "src/app/core/models/user.model";
+import { TicketsSearch } from "src/app/core/models/tickets.model";
+
 import { LoginRequest } from "../models/auth.model";
-import { TicketsSearch } from "./models/ticket.model";
 import { UsersRepository } from "./repositories/users.repository";
 import { TicketsRepository } from "./repositories/tickets.repository";
 import { SeatMapRepository } from "./repositories/seat-map.repository";

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 
-import { AirportResponse } from "./search.model";
+import { AirportResponse } from "src/app/core/models/search.model";
 
 @Injectable()
 export class SearchService {

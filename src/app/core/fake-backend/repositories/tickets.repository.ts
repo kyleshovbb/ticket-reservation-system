@@ -1,7 +1,8 @@
 import { address, date, hacker, random, finance } from "faker";
 
+import { Tickets, Ticket, Transfer, TicketsSearch, TravelRoute } from "src/app/core/models/tickets.model";
+
 import airports from "../data/airports.data";
-import { Tickets, Ticket, Transfer, TicketsSearch, TravelRoute } from "../models/ticket.model";
 
 enum TicketsStorageKeys {
   Tickets = "tickets"

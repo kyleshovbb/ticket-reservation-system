@@ -1,27 +1,35 @@
 import { random } from "faker";
 
-import { SeatMaps, SeatMap, Column, SeatLocation, Seat, Row, Characteristic, Prices } from "../models/seat-map.model";
+import {
+  SeatsMap,
+  Column,
+  SeatLocation,
+  Row,
+  Characteristic,
+  Seat,
+  Legends
+} from "src/app/core/models/seats-map.model";
 
 enum SeatMapStorageKeys {
   SeatMap = "seat-map"
 }
 
 export class SeatMapRepository {
-  private _seatMaps: SeatMaps = JSON.parse(localStorage.getItem(SeatMapStorageKeys.SeatMap)) || [];
+  private _seatsMaps: SeatsMap[] = JSON.parse(localStorage.getItem(SeatMapStorageKeys.SeatMap)) || [];
 
-  public getOne(plane: string): SeatMap {
-    const seatMap = this._seatMaps.find(seatMap => seatMap.plane === plane);
+  public getOne(plane: string): SeatsMap {
+    const seatMap = this._seatsMaps.find(seatMap => seatMap.plane === plane);
     return seatMap || this.getNewSeatMap(plane);
   }
 
-  private getNewSeatMap(plane: string): SeatMap {
+  private getNewSeatMap(plane: string): SeatsMap {
     const columns = this.getColumns();
 
     return {
       plane,
       columns,
       rows: this.getRows(columns),
-      prices: this.getPrices()
+      legends: this.getLegends()
     };
   }
 
@@ -93,7 +101,7 @@ export class SeatMapRepository {
     }));
   }
 
-  private getPrices(): Prices {
+  private getLegends(): Legends {
     return {
       [Characteristic.Standard]: this.getPriceByCharacteristic(Characteristic.Standard),
       [Characteristic.Front]: this.getPriceByCharacteristic(Characteristic.Front),
