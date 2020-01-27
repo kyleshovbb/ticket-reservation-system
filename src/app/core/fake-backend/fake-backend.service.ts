@@ -2,23 +2,19 @@ import { Injectable } from "@angular/core";
 import { HttpResponse, HttpParams } from "@angular/common/http";
 import { of, throwError } from "rxjs";
 
-import { User } from "./fake-backend.model";
+import { User } from "./models/user.model";
 import { LoginRequest } from "../models/auth.model";
-import { TicketsSearch } from "./repositories/tickets.model";
+import { TicketsSearch } from "./models/ticket.model";
+import { UsersRepository } from "./repositories/users.repository";
 import { TicketsRepository } from "./repositories/tickets.repository";
-
-enum StorageKeys {
-  Users = "users"
-}
 
 @Injectable()
 export class FakeBackendService {
-  private users: User[] = JSON.parse(localStorage.getItem(StorageKeys.Users)) || [];
+  private usersRepository = new UsersRepository();
   private ticketsRepository = new TicketsRepository();
 
   public register(user: User) {
-    this.users.push(user);
-    localStorage.setItem(StorageKeys.Users, JSON.stringify(this.users));
+    this.usersRepository.createUser(user);
 
     return of(
       new HttpResponse({
@@ -55,7 +51,7 @@ export class FakeBackendService {
   }
 
   public login(body: LoginRequest) {
-    const user = this.users.find(user => user.password === body.password && body.username === user.username);
+    const user = this.usersRepository.authentication(body);
 
     return !!user
       ? of(

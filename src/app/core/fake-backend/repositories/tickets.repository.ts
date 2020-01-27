@@ -1,7 +1,7 @@
 import { address, date, hacker, random, finance } from "faker";
 
-import airports from "./airports.data";
-import { Tickets, Ticket, Transfer, TicketsSearch, TravelRoute } from "./tickets.model";
+import airports from "../data/airports.data";
+import { Tickets, Ticket, Transfer, TicketsSearch, TravelRoute } from "../models/ticket.model";
 
 export class TicketsRepository {
   private _tickets: Tickets = [];
