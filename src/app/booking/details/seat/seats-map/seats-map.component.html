@@ -1,0 +1,31 @@
+<div class="seats-map">
+  <div
+    class="seats-map__row"
+    *ngFor="let seatRow of planeSeatMap.seatRows"
+    [ngClass]="{
+      'seats-map__row_front': seatRow.type === rowType.FrontOfCabin,
+      'seats-map__row_exit': seatRow.type === rowType.ExitRow,
+      'seats-map__row_standard': seatRow.type === rowType.Standard
+    }"
+  >
+    <div class="seats-map__emergency-exit" *ngIf="seatRow.type === rowType.ExitRow">Emergency exit</div>
+    <div class="seats-map__seats-row">
+      <div
+        class="seats-map__seat"
+        *ngFor="let seat of seatRow.seats"
+        [ngClass]="{
+          'seats-map__seat-type_front': seatRow.type === rowType.FrontOfCabin,
+          'seats-map__seat-type_exit': seatRow.type === rowType.ExitRow,
+          'seats-map__seat-type_standard': seatRow.type === rowType.Standard,
+          'seats-map__seat-status_occupied': seat.status === seatStatus.Occupied,
+          'seats-map__seat-status_available': seat.status === seatStatus.Available,
+          'seats-map__seat-pass_left': seat && seat.passDuration === passDuration.Left,
+          'seats-map__seat-pass_right': seat && seat.passDuration === passDuration.Right
+        }"
+        (click)="onSelect(seat.number, seat.status === seatStatus.Available)"
+      >
+        {{ seat.number }}
+      </div>
+    </div>
+  </div>
+</div>

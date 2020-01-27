@@ -1,0 +1,97 @@
+@import "../../../../../style/theme.less";
+
+.seats-map {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  background-color: @main-background-color;
+  padding: 10px;
+
+  &__row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__seats-row {
+    display: flex;
+  }
+
+  &__seat {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3px;
+    width: 40px;
+    height: 40px;
+    color: @dark-text-color;
+    border: 1px solid @border-color;
+    border-radius: 3px;
+    background-color: @white;
+
+    &:hover {
+      color: @white;
+      background-color: @background-color;
+    }
+  }
+
+  &__seat-type {
+    &_front {
+      background-color: #efae00;
+    }
+
+    &_exit {
+      color: @white;
+      background-color: #3c73d8;
+    }
+  }
+
+  &__seat-status {
+    &_occupied {
+      cursor: no-drop;
+      color: @white;
+      border-color: @disable-darken-color;
+      background-color: @disable-darken-color;
+    }
+  }
+
+  &__seat-pass {
+    &_left {
+      margin-left: 13px;
+    }
+
+    &_right {
+      margin-right: 13px;
+    }
+  }
+
+  &__emergency-exit {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 10px 10px;
+
+    &::after,
+    &::before {
+      content: "";
+      position: absolute;
+      transform: rotate(-45deg);
+      top: 12px;
+      width: 10px;
+      height: 10px;
+      border-style: solid;
+      border-color: @background-color;
+      display: block;
+    }
+
+    &::before {
+      left: 25px;
+      border-width: 3px 0 0 3px;
+    }
+
+    &::after {
+      right: 25px;
+      border-width: 0 3px 3px 0;
+    }
+  }
+}

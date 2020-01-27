@@ -1,0 +1,9 @@
+<div class="seat">
+  <h2 class="seat__title" [ngClass]="{ seat__title_open: isOpen }" (click)="toggle()">
+    Seat
+  </h2>
+
+  <div class="seat__container" *ngIf="isOpen">
+    <app-seats-map (seatNumberSelected)="seatNumberSelected($event)"></app-seats-map>
+  </div>
+</div>
