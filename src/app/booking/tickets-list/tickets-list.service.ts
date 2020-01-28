@@ -1,17 +1,17 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Subject, of, Observable } from "rxjs";
+import { of, Observable, ReplaySubject } from "rxjs";
 import { tap, catchError, map } from "rxjs/operators";
 
-import { Tickets, Ticket } from "./booking.model";
-import { SearchFormValue } from "./search/search.model";
+import { SearchFormValue } from "src/app/core/models/search.model";
+import { Ticket, Tickets } from "src/app/core/models/tickets.model";
 
 @Injectable()
-export class BookingService {
-  private bookingTicketsSubject = new Subject<Tickets>();
+export class TicketsListService {
+  private ticketsListSubject = new ReplaySubject<Tickets>();
 
-  public get bookingTickets$() {
-    return this.bookingTicketsSubject.asObservable();
+  public get ticketsList$() {
+    return this.ticketsListSubject.asObservable();
   }
 
   constructor(private http: HttpClient) {}
@@ -19,8 +19,7 @@ export class BookingService {
   public loadTicketsList(params: SearchFormValue) {
     return this.fetchTicketsList(params).pipe(
       tap(tickets => {
-        console.log(tickets);
-        this.bookingTicketsSubject.next(tickets);
+        this.ticketsListSubject.next(tickets);
       }),
       catchError(() => of({}))
     );

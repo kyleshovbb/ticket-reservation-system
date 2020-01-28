@@ -4,14 +4,14 @@ import { Subscription, pipe } from "rxjs";
 import { debounceTime, distinctUntilChanged, mergeMap, map } from "rxjs/operators";
 
 import { Option } from "src/app/shared/models/form.model";
+import { SearchType } from "src/app/core/models/tickets.model";
+import { AirportResponse } from "src/app/core/models/search.model";
 
-import { SearchType } from "../booking.model";
 import { SearchService } from "./search.service";
-import { BookingService } from "../booking.service";
-import { AirportResponse } from "./search.model";
+import { TicketsListService } from "../tickets-list.service";
 
 @Component({
-  selector: "app-booking-search",
+  selector: "app-booking-tickets-list-search",
   templateUrl: "./search.component.html",
   styleUrls: ["./search.component.less"],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -74,8 +74,8 @@ export class SearchComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
-    private homeService: BookingService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private ticketsListService: TicketsListService
   ) {
     this.searchForm = this.fb.group({
       originPlace: ["", Validators.required],
@@ -95,7 +95,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit() {
-    this.homeService.loadTicketsList(this.searchForm.value).subscribe();
+    this.ticketsListService.loadTicketsList(this.searchForm.value).subscribe();
   }
 
   private handleOriginPlaceValueChanges() {

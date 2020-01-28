@@ -2,23 +2,22 @@ import { Injectable } from "@angular/core";
 import { HttpResponse, HttpParams } from "@angular/common/http";
 import { of, throwError } from "rxjs";
 
-import { User } from "./fake-backend.model";
-import { LoginRequest } from "../models/auth.model";
-import { TicketsSearch } from "./repositories/tickets.model";
-import { TicketsRepository } from "./repositories/tickets.repository";
+import { User } from "src/app/core/models/user.model";
+import { TicketsSearch } from "src/app/core/models/tickets.model";
 
-enum StorageKeys {
-  Users = "users"
-}
+import { LoginRequest } from "../models/auth.model";
+import { UsersRepository } from "./repositories/users.repository";
+import { TicketsRepository } from "./repositories/tickets.repository";
+import { SeatMapRepository } from "./repositories/seat-map.repository";
 
 @Injectable()
 export class FakeBackendService {
-  private users: User[] = JSON.parse(localStorage.getItem(StorageKeys.Users)) || [];
+  private usersRepository = new UsersRepository();
+  private seatMapRepository = new SeatMapRepository();
   private ticketsRepository = new TicketsRepository();
 
   public register(user: User) {
-    this.users.push(user);
-    localStorage.setItem(StorageKeys.Users, JSON.stringify(this.users));
+    this.usersRepository.createUser(user);
 
     return of(
       new HttpResponse({
@@ -54,8 +53,26 @@ export class FakeBackendService {
     );
   }
 
+  public getTicket(id: string) {
+    return of(
+      new HttpResponse({
+        status: 201,
+        body: this.ticketsRepository.getOne(id)
+      })
+    );
+  }
+
+  public getSeatMap(plane: string) {
+    return of(
+      new HttpResponse({
+        status: 201,
+        body: this.seatMapRepository.getOne(plane)
+      })
+    );
+  }
+
   public login(body: LoginRequest) {
-    const user = this.users.find(user => user.password === body.password && body.username === user.username);
+    const user = this.usersRepository.authentication(body);
 
     return !!user
       ? of(

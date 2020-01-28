@@ -1,10 +1,15 @@
 import { address, date, hacker, random, finance } from "faker";
 
-import airports from "./airports.data";
-import { Tickets, Ticket, Transfer, TicketsSearch, TravelRoute } from "./tickets.model";
+import { Tickets, Ticket, Transfer, TicketsSearch, TravelRoute } from "src/app/core/models/tickets.model";
+
+import airports from "../data/airports.data";
+
+enum TicketsStorageKeys {
+  Tickets = "tickets"
+}
 
 export class TicketsRepository {
-  private _tickets: Tickets = [];
+  private _tickets: Tickets = JSON.parse(localStorage.getItem(TicketsStorageKeys.Tickets)) || [];
 
   public getAll(): Tickets {
     return this._tickets.slice();
@@ -18,6 +23,7 @@ export class TicketsRepository {
     const randomTicketsCount = random.number({ min: 1, max: 10 });
 
     this._tickets = new Array(randomTicketsCount).fill(null).map(() => this.getTicket(search));
+    localStorage.setItem(TicketsStorageKeys.Tickets, JSON.stringify(this._tickets));
   }
 
   private getTicket(search: TicketsSearch): Ticket {

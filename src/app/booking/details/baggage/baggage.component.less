@@ -1,0 +1,151 @@
+@import "../../../../style/theme.less";
+
+.baggage {
+  &__title {
+    font-size: 18px;
+    position: relative;
+    border-left: 4px solid @primary-color;
+    border-radius: 3px;
+    padding: 10px 15px;
+    background-color: @primary-transparent-color;
+    cursor: pointer;
+
+    &::after {
+      content: "";
+      position: absolute;
+      transform: rotate(-45deg);
+      transition: transform 0.25s linear;
+      top: 15px;
+      right: 25px;
+      width: 10px;
+      height: 10px;
+      border-width: 3px 3px 0 0;
+      border-style: solid;
+      border-color: @primary-color;
+      display: block;
+    }
+
+    &_open {
+      &::after {
+        transform: rotate(135deg);
+        transition: transform 0.25s linear;
+      }
+    }
+  }
+
+  &__container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  &__info-container {
+    border: 3px solid @main-background-color;
+    border-radius: 3px;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+  }
+
+  &__name,
+  &__description,
+  &__field-name,
+  &__field-description {
+    flex: 5;
+    font-size: 14px;
+  }
+
+  &__name,
+  &__price,
+  &__field-name {
+    font-weight: 600;
+  }
+
+  &__description,
+  &__field-description {
+    color: @disable-color;
+  }
+
+  &__price {
+    flex: 1;
+  }
+
+  &__action {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__delete-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -12px;
+    right: -12px;
+    width: 24px;
+    height: 24px;
+    color: @white;
+    background-color: @disable-color;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &:active,
+    &:focus {
+      box-shadow: none;
+      outline: 0;
+    }
+  }
+
+  &__field {
+    display: flex;
+    margin-top: 15px;
+  }
+
+  &__field-info {
+    display: flex;
+    flex: 10;
+    padding: 10px 15px;
+    border-radius: 3px;
+    background-color: @main-background-color;
+  }
+
+  &__countable-field-info {
+    flex: 9;
+
+    .baggage__field-description {
+      flex: 4;
+    }
+  }
+
+  &__field-info,
+  &__description {
+    margin-right: 15px;
+  }
+
+  &__selector-action,
+  &__count {
+    display: flex;
+    align-items: center;
+  }
+
+  &__selector-action {
+    flex: 2;
+  }
+
+  &__count {
+    flex: 1;
+  }
+
+  ::ng-deep app-input-number .input-number {
+    margin-bottom: 0;
+    margin-right: 15px;
+
+    &__field {
+      width: 100%;
+    }
+  }
+}

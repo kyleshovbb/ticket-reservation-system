@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ReplaySubject, BehaviorSubject } from "rxjs";
 
-import { AuthModalType } from "./auth-modal.model";
+import { AuthModalType } from "src/app/core/models/auth-modal.model";
 
 @Injectable()
 export class AuthModalService {

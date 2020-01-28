@@ -1,11 +1,8 @@
 <div class="header">
-  <div class="header__logo"></div>
+  <div class="header__btn header__logo" [routerLink]="['/']">Home</div>
 
   <div class="header__actions">
-    <div
-      class="header__user-actions"
-      *ngIf="isUserAuthenticated$ | async; else noAuth"
-    >
+    <div class="header__user-actions" *ngIf="isUserAuthenticated$ | async; else noAuth">
       <button class="header__logout-btn header__btn" (click)="logout()">
         Logout
       </button>
@@ -14,16 +11,10 @@
 
   <ng-template #noAuth>
     <div class="header__guest-actions">
-      <button
-        class="header__login-btn header__btn"
-        (click)="openAuthModal('login')"
-      >
+      <button class="header__login-btn header__btn" (click)="openAuthModal('login')">
         Login
       </button>
-      <button
-        class="header__register-btn header__btn"
-        (click)="openAuthModal('registration')"
-      >
+      <button class="header__register-btn header__btn" (click)="openAuthModal('registration')">
         Register
       </button>
     </div>

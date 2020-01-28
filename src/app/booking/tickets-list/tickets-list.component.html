@@ -1,4 +1,6 @@
-<div class="tickets" *ngIf="bookingTickets$ | async as tickets">
+<app-booking-tickets-list-search></app-booking-tickets-list-search>
+
+<div class="tickets" *ngIf="ticketsList$ | async as tickets">
   <div class="tickets__ticket" *ngFor="let ticket of tickets">
     <div class="tickets__routes">
       <app-travel-route [travelRoute]="travelRoute" *ngFor="let travelRoute of ticket.routes"></app-travel-route>
@@ -6,7 +8,7 @@
 
     <div class="tickets__ticket-book-container">
       <div class="tickets__ticket-price">{{ ticket.price | currency: ticket.currency }}</div>
-      <button class="btn btn-primary tickets__book-btn">Book</button>
+      <a class="btn btn-primary tickets__book-btn" [routerLink]="['details', ticket.id]">Book</a>
     </div>
   </div>
 </div>
