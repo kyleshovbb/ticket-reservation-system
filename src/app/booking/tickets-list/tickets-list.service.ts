@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Subject, of, Observable } from "rxjs";
+import { of, Observable, ReplaySubject } from "rxjs";
 import { tap, catchError, map } from "rxjs/operators";
 
 import { SearchFormValue } from "src/app/core/models/search.model";
@@ -8,7 +8,7 @@ import { Ticket, Tickets } from "src/app/core/models/tickets.model";
 
 @Injectable()
 export class TicketsListService {
-  private ticketsListSubject = new Subject<Tickets>();
+  private ticketsListSubject = new ReplaySubject<Tickets>();
 
   public get ticketsList$() {
     return this.ticketsListSubject.asObservable();

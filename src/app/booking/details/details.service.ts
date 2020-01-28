@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Subject, of, Observable } from "rxjs";
+import { of, Observable, ReplaySubject } from "rxjs";
 import { tap, catchError } from "rxjs/operators";
 
 import { Ticket } from "src/app/core/models/tickets.model";
 
 @Injectable()
 export class DetailsService {
-  private ticketDetailsSubject = new Subject<Ticket>();
+  private ticketDetailsSubject = new ReplaySubject<Ticket>(1);
 
   public get ticketDetails$() {
     return this.ticketDetailsSubject.asObservable();
@@ -18,7 +18,6 @@ export class DetailsService {
   public loadTicketDetails(id: string) {
     return this.fetchTicketDetails(id).pipe(
       tap(ticket => {
-        console.log(ticket);
         this.ticketDetailsSubject.next(ticket);
       }),
       catchError(() => of({}))

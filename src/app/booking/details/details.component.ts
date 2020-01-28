@@ -2,7 +2,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { Observable } from "rxjs";
 
-import { Ticket } from "src/app/core/models/tickets.model";
+import { Ticket, Transfer } from "src/app/core/models/tickets.model";
 
 import { DetailsService } from "./details.service";
 import { Baggage, BaggageType } from "./baggage/baggage.model";
@@ -32,5 +32,9 @@ export class DetailsComponent implements OnInit {
   ngOnInit() {
     const id = this.route.snapshot.params["id"];
     this.detailsService.loadTicketDetails(id).subscribe();
+  }
+
+  public getPlaneNameByTransfer(transfer: Transfer) {
+    return `${transfer.planeNum[0]} - ${transfer.planeNum[1]}`;
   }
 }

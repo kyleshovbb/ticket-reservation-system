@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit } from "@angular/core";
+import { Component, ChangeDetectionStrategy, OnInit, Input } from "@angular/core";
 import { Observable } from "rxjs";
 
 import { SeatsMap, Seat } from "src/app/core/models/seats-map.model";
@@ -12,6 +12,8 @@ import { SeatsMapService } from "./seats-map/seats-map.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SeatComponent implements OnInit {
+  @Input() plane: string;
+
   public seatsMap$: Observable<SeatsMap>;
   public selectedSeat: Seat;
   public isOpen = false;
@@ -21,7 +23,7 @@ export class SeatComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.seatsMapService.loadSeatsMap("test").subscribe();
+    this.seatsMapService.loadSeatsMap(this.plane).subscribe();
   }
 
   public toggle() {

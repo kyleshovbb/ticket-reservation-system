@@ -19,7 +19,14 @@ export class SeatMapRepository {
 
   public getOne(plane: string): SeatsMap {
     const seatMap = this._seatsMaps.find(seatMap => seatMap.plane === plane);
-    return seatMap || this.getNewSeatMap(plane);
+
+    if (seatMap) {
+      return seatMap;
+    } else {
+      const newSeatMap = this.getNewSeatMap(plane);
+      this.saveSeatsMap(newSeatMap);
+      return newSeatMap;
+    }
   }
 
   private getNewSeatMap(plane: string): SeatsMap {
@@ -33,8 +40,13 @@ export class SeatMapRepository {
     };
   }
 
+  private saveSeatsMap(seatsMap: SeatsMap) {
+    this._seatsMaps.push(seatsMap);
+    localStorage.setItem(SeatMapStorageKeys.SeatMap, JSON.stringify(this._seatsMaps));
+  }
+
   private getColumns(): Column[] {
-    const columnsLength = random.number({ min: 4, max: 7 });
+    const columnsLength = random.number({ min: 4, max: 6, precision: 2 });
     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const aisle = this.getAisle(columnsLength);
 

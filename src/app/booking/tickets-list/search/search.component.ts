@@ -74,8 +74,8 @@ export class SearchComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
-    private homeService: TicketsListService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private ticketsListService: TicketsListService
   ) {
     this.searchForm = this.fb.group({
       originPlace: ["", Validators.required],
@@ -95,7 +95,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit() {
-    this.homeService.loadTicketsList(this.searchForm.value).subscribe();
+    this.ticketsListService.loadTicketsList(this.searchForm.value).subscribe();
   }
 
   private handleOriginPlaceValueChanges() {

@@ -10,7 +10,7 @@ import { SeatsMap, Characteristic, SeatLocation, Seat } from "src/app/core/model
 })
 export class SeatsMapComponent {
   @Input() seatsMap: SeatsMap;
-  @Output() selectSeat = new EventEmitter();
+  @Output() selectSeat = new EventEmitter<Seat>();
 
   public seatLocation = SeatLocation;
   public characteristic = Characteristic;
