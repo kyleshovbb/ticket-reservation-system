@@ -33,8 +33,4 @@ export class DetailsComponent implements OnInit {
     const id = this.route.snapshot.params["id"];
     this.detailsService.loadTicketDetails(id).subscribe();
   }
-
-  public getPlaneNameByTransfer(transfer: Transfer) {
-    return `${transfer.planeNum[0]} - ${transfer.planeNum[1]}`;
-  }
 }

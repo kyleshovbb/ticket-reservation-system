@@ -1,19 +1,86 @@
 <div class="seats-map">
-  <div class="seats-map__row" *ngFor="let seatRow of seatsMap.rows">
-    <div class="seats-map__emergency-exit" *ngIf="seatRow.isExitRow">Emergency exit</div>
-    <div class="seats-map__seats-row">
+  <div class="seats-map__header">
+    <div class="seats-map__transfer-info">
+      <div class="seats-map__operating">
+        <span class="seats-map__equipment">{{ transfer.airline }}</span
+        >,
+        <span class="seats-map__plane-code">{{ transfer.planeNum[0] }} - {{ transfer.planeNum[1] }}</span>
+      </div>
+
+      <div class="seats-map__duration">
+        <span>{{ transfer.departAirportName }} ({{ transfer.departAirportCode }})</span> -
+        <span>{{ transfer.arriveAirportName }} ({{ transfer.arriveAirportCode }})</span>
+      </div>
+    </div>
+
+    <button class="seats-map__select-btn btn btn-primary" *ngIf="!isActive; else closeBtn" (click)="toggle()">
+      {{ passengersRepository.hasSelectedSeats ? "Change" : "Select" }}
+    </button>
+
+    <ng-template #closeBtn>
+      <a class="seats-map__close close" (click)="toggle()"></a>
+    </ng-template>
+  </div>
+
+  <div class="seats-map__container" *ngIf="isActive">
+    <div class="seats-map__info">
       <div
-        class="seats-map__seat"
-        *ngFor="let seat of seatRow.seats"
-        (click)="onSelectSeat(seat)"
-        [ngClass]="{
-          'seats-map__seat-type_exit': seatRow.isExitRow,
-          'seats-map__seat-type_front': seatRow.isWing,
-          'seats-map__seat-status_occupied': seat.isOccupied,
-          'seats-map__seat-pass_aisle': seat.location && seat.location === seatLocation.Aisle
-        }"
+        class="seats-map__passengers-list"
+        *ngFor="let passenger of passengersRepository.getAll()"
+        (click)="passengersRepository.activatePassenger(passenger)"
       >
-        {{ seat.number }}
+        <div class="seats-map__passenger" [ngClass]="{ 'seats-map__passenger_active': passenger.isActive }">
+          Selected seat:
+          <span class="seats-map__selected-seat" *ngIf="passenger.selectedSeat as selectedSeat; else empty">
+            {{ selectedSeat.number }} - {{ selectedSeat.price.amount | currency: selectedSeat.price.currency }}
+          </span>
+          <ng-template #empty>---</ng-template>
+
+          <a class="seats-map__close-selected-seat close" (click)="passenger.clear()"></a>
+        </div>
+      </div>
+
+      <div class="seats-map__legend-info">
+        <ng-container
+          *ngFor="let seatPrice of seatPrices"
+          [ngTemplateOutlet]="seatInfo"
+          [ngTemplateOutletContext]="{
+            name: seatPrice.name,
+            price: seatPrice.price?.amount,
+            currency: seatPrice.price?.currency
+          }"
+        ></ng-container>
+      </div>
+
+      <ng-template #seatInfo let-name="name" let-price="price" let-currency="currency">
+        <div class="seats-map__legend" [ngClass]="['seats-map__legend_' + name]">
+          <div class="seats-map__legend-name">{{ name | titlecase }}</div>
+          <div class="seats-map__legend-price" *ngIf="price">{{ price | currency: currency }}</div>
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="seats-map__map-container">
+      <div class="seats-map__map" *ngIf="seatsMap">
+        <div class="seats-map__row" *ngFor="let seatRow of seatsMap.rows">
+          <div class="seats-map__emergency-exit" *ngIf="seatRow.isExitRow">Emergency exit</div>
+          <div class="seats-map__seats-row">
+            <div
+              class="seats-map__seat"
+              *ngFor="let seat of seatRow.seats"
+              (click)="onToggleSeat(seat)"
+              [ngClass]="{
+                'seats-map__seat-type_selected': passengersRepository.hasSelectedSeat(seat),
+                'seats-map__seat-type_exit': seatRow.isExitRow,
+                'seats-map__seat-type_front': seatRow.isWing,
+                'seats-map__seat-status_occupied': seat.isOccupied,
+                'seats-map__seat-pass_aisle': seat.location && seat.location === seatLocation.Aisle
+              }"
+            >
+              {{ seat.number }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

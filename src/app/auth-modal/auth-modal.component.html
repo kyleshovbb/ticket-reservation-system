@@ -1,10 +1,8 @@
 <div class="auth-modal" *ngIf="isOpen$ | async">
   <div class="auth-modal__body" [ngSwitch]="authModalType$ | async">
-    <a class="auth-modal__close" (click)="onClose()">X</a>
+    <a class="auth-modal__close close" (click)="onClose()"></a>
     <app-login *ngSwitchCase="authModalType.Login"></app-login>
-    <app-registration
-      *ngSwitchCase="authModalType.Registration"
-    ></app-registration>
+    <app-registration *ngSwitchCase="authModalType.Registration"></app-registration>
   </div>
 
   <div class="auth-modal__overlay" (click)="onClose()"></div>

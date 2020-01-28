@@ -30,6 +30,7 @@ export class TicketsRepository {
     return {
       id: random.uuid(),
       price: Number(finance.amount(20, 2000)),
+      adult: Number(search.pax),
       currency: "USD",
       routes: this.getRoutes(search)
     };

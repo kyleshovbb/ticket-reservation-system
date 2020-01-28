@@ -1,9 +1,7 @@
-import { Component, ChangeDetectionStrategy, OnInit, Input } from "@angular/core";
-import { Observable } from "rxjs";
+import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
 
-import { SeatsMap, Seat } from "src/app/core/models/seats-map.model";
-
-import { SeatsMapService } from "./seats-map/seats-map.service";
+import { Seat } from "src/app/core/models/seats-map.model";
+import { Ticket, Transfer } from "src/app/core/models/tickets.model";
 
 @Component({
   selector: "app-booking-details-seat",
@@ -11,20 +9,11 @@ import { SeatsMapService } from "./seats-map/seats-map.service";
   styleUrls: ["./seat.component.less"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SeatComponent implements OnInit {
-  @Input() plane: string;
+export class SeatComponent {
+  @Input() ticket: Ticket;
 
-  public seatsMap$: Observable<SeatsMap>;
   public selectedSeat: Seat;
   public isOpen = false;
-
-  constructor(private seatsMapService: SeatsMapService) {
-    this.seatsMap$ = seatsMapService.seatsMap$;
-  }
-
-  ngOnInit(): void {
-    this.seatsMapService.loadSeatsMap(this.plane).subscribe();
-  }
 
   public toggle() {
     this.isOpen = !this.isOpen;
@@ -32,5 +21,9 @@ export class SeatComponent implements OnInit {
 
   public selectSeat(seat: Seat) {
     this.selectedSeat = seat;
+  }
+
+  public get allTransfers(): Transfer[] {
+    return this.ticket.routes.reduce((transfers, route) => [...transfers, ...route.transfers], []);
   }
 }

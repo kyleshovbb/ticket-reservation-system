@@ -1,17 +1,133 @@
 @import "../../../../../style/theme.less";
 
+@front-background-color: #efae00;
+@exit-background-color: #3c73d8;
+
 :host {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  margin-top: 20px;
 }
 
 .seats-map {
   display: flex;
-  flex-direction: column;
-  width: max-content;
-  background-color: @main-background-color;
   padding: 10px;
+  width: 100%;
+  border: 1px solid @main-background-color;
+  flex-direction: column;
+
+  &__header {
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+  }
+
+  &__operating {
+    font-weight: 600;
+  }
+
+  &__info {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__container {
+    width: 100%;
+    display: flex;
+  }
+
+  &__passenger {
+    width: 100%;
+    padding: 10px 15px;
+    position: relative;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &_active {
+      cursor: auto;
+      color: @white;
+      background-color: @primary-color;
+    }
+
+    &:not(.seats-map__passenger_active):hover {
+      color: @dark-text-color;
+      background-color: @primary-transparent-color;
+    }
+  }
+
+  &__close-selected-seat {
+    top: 8px;
+    right: 4px;
+  }
+
+  &__selected-seat {
+    font-weight: 600;
+  }
+
+  &__legend-info {
+    margin-top: 15px;
+  }
+
+  &__legend {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 25px;
+    padding: 5px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: -25px;
+      top: 2px;
+      width: 20px;
+      height: 20px;
+      display: block;
+      border: 1px solid @border-color;
+      border-radius: 3px;
+      background-color: @white;
+    }
+
+    &_front {
+      &::before {
+        background-color: @front-background-color;
+      }
+    }
+
+    &_exit {
+      &::before {
+        background-color: @exit-background-color;
+      }
+    }
+
+    &_selected {
+      &::before {
+        background-color: @primary-color;
+      }
+    }
+
+    &_occupied {
+      &::before {
+        background-color: @disable-darken-color;
+      }
+    }
+  }
+
+  &__map-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__map {
+    flex-direction: column;
+    width: max-content;
+    background-color: @main-background-color;
+  }
 
   &__row {
     display: flex;
@@ -43,12 +159,17 @@
 
   &__seat-type {
     &_front {
-      background-color: #efae00;
+      background-color: @front-background-color;
     }
 
     &_exit {
       color: @white;
-      background-color: #3c73d8;
+      background-color: @exit-background-color;
+    }
+
+    &_selected {
+      color: @white;
+      background-color: @primary-color;
     }
   }
 

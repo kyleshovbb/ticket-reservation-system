@@ -1,13 +1,13 @@
 import { random } from "faker";
 
 import {
-  SeatsMap,
-  Column,
-  SeatLocation,
   Row,
-  Characteristic,
   Seat,
-  Legends
+  Column,
+  Legends,
+  SeatsMap,
+  SeatLocation,
+  Characteristic
 } from "src/app/core/models/seats-map.model";
 
 enum SeatMapStorageKeys {

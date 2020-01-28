@@ -3,8 +3,6 @@
 
   <ng-container *ngIf="ticketDetails$ | async as ticketDetails">
     <app-booking-details-baggage [(baggages)]="baggages"></app-booking-details-baggage>
-    <app-booking-details-seat
-      [plane]="getPlaneNameByTransfer(ticketDetails.routes[0].transfers[0])"
-    ></app-booking-details-seat>
+    <app-booking-details-seat [ticket]="ticketDetails"></app-booking-details-seat>
   </ng-container>
 </div>

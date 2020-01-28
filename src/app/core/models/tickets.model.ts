@@ -17,6 +17,7 @@ export interface Ticket {
   id: string;
   price: number;
   currency: string;
+  adult: number;
   routes: TravelRoute[];
 }
 

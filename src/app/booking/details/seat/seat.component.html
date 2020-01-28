@@ -1,12 +1,14 @@
 <div class="seat">
   <h2 class="seat__title" [ngClass]="{ seat__title_open: isOpen }" (click)="toggle()">
-    Seat
+    Seat selection
   </h2>
 
   <div class="seat__container" *ngIf="isOpen">
-    <ng-container *ngIf="seatsMap$ | async as seatsMap">
-      <app-seat-info [legends]="seatsMap.legends" [selectedSeat]="selectedSeat"></app-seat-info>
-      <app-seats-map [seatsMap]="seatsMap" (selectSeat)="selectSeat($event)"></app-seats-map>
-    </ng-container>
+    <app-seats-map
+      *ngFor="let transfer of allTransfers"
+      [adult]="ticket.adult"
+      [transfer]="transfer"
+      (selectSeat)="selectSeat($event)"
+    ></app-seats-map>
   </div>
 </div>

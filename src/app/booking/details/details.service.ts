@@ -18,6 +18,7 @@ export class DetailsService {
   public loadTicketDetails(id: string) {
     return this.fetchTicketDetails(id).pipe(
       tap(ticket => {
+        console.log(ticket);
         this.ticketDetailsSubject.next(ticket);
       }),
       catchError(() => of({}))
