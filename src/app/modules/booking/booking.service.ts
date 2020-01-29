@@ -7,7 +7,7 @@ import { SearchFormValue } from "src/app/core/models/search.model";
 import { Ticket, Tickets } from "src/app/core/models/tickets.model";
 
 @Injectable()
-export class TicketsListService {
+export class BookingService {
   private ticketsListSubject = new ReplaySubject<Tickets>();
 
   public get ticketsList$() {

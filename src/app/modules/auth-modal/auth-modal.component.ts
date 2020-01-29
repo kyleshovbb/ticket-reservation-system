@@ -11,7 +11,7 @@ import { AuthModalService } from "./auth-modal.service";
   styleUrls: ["./auth-modal.component.less"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AuthComponent {
+export class AuthModalComponent {
   public isOpen$: Observable<boolean>;
   public authModalType$: Observable<AuthModalType>;
 

@@ -1,0 +1,14 @@
+<app-booking-search></app-booking-search>
+
+<div class="booking" *ngIf="ticketsList$ | async as tickets">
+  <div class="booking__ticket" *ngFor="let ticket of tickets">
+    <div class="booking__routes">
+      <app-travel-route [travelRoute]="travelRoute" *ngFor="let travelRoute of ticket.routes"></app-travel-route>
+    </div>
+
+    <div class="booking__ticket-book-container">
+      <div class="booking__ticket-price">{{ ticket.price | currency: ticket.currency }}</div>
+      <a class="booking__book-btn btn btn-primary" [routerLink]="['/details', ticket.id]">Book</a>
+    </div>
+  </div>
+</div>

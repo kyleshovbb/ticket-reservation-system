@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 
 import { UserService } from "src/app/core/services/user.service";
 import { AuthModalType } from "src/app/core/models/auth-modal.model";
-import { AuthModalService } from "src/app/auth-modal/auth-modal.service";
+import { AuthModalService } from "src/app/modules/auth-modal/auth-modal.service";
 
 @Component({
   selector: "app-header",

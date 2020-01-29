@@ -3,18 +3,18 @@ import { Observable } from "rxjs";
 
 import { Tickets } from "src/app/core/models/tickets.model";
 
-import { TicketsListService } from "./tickets-list.service";
+import { BookingService } from "./booking.service";
 
 @Component({
-  selector: "app-booking-tickets-list",
-  templateUrl: "./tickets-list.component.html",
-  styleUrls: ["./tickets-list.component.less"],
+  selector: "app-booking",
+  templateUrl: "./booking.component.html",
+  styleUrls: ["./booking.component.less"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TicketsListComponent {
+export class BookingComponent {
   public ticketsList$: Observable<Tickets>;
 
-  constructor(ticketsListService: TicketsListService) {
+  constructor(ticketsListService: BookingService) {
     this.ticketsList$ = ticketsListService.ticketsList$;
   }
 }

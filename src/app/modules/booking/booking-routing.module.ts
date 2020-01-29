@@ -1,17 +1,12 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
-import { DetailsComponent } from "./details/details.component";
-import { TicketsListComponent } from "./tickets-list/tickets-list.component";
+import { BookingComponent } from "./booking.component";
 
 const routes: Routes = [
   {
-    path: "details/:id",
-    component: DetailsComponent
-  },
-  {
     path: "",
-    component: TicketsListComponent
+    component: BookingComponent
   }
 ];
 

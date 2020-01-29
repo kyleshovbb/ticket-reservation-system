@@ -8,10 +8,10 @@ import { SearchType } from "src/app/core/models/tickets.model";
 import { AirportResponse } from "src/app/core/models/search.model";
 
 import { SearchService } from "./search.service";
-import { TicketsListService } from "../tickets-list.service";
+import { BookingService } from "../booking.service";
 
 @Component({
-  selector: "app-booking-tickets-list-search",
+  selector: "app-booking-search",
   templateUrl: "./search.component.html",
   styleUrls: ["./search.component.less"],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -75,7 +75,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     private searchService: SearchService,
-    private ticketsListService: TicketsListService
+    private ticketsListService: BookingService
   ) {
     this.searchForm = this.fb.group({
       originPlace: ["", Validators.required],
