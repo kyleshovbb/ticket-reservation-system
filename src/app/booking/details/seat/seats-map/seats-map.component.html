@@ -36,7 +36,11 @@
           </span>
           <ng-template #empty>---</ng-template>
 
-          <a class="seats-map__close-selected-seat close" (click)="passenger.clear()"></a>
+          <a
+            class="seats-map__close-selected-seat close"
+            *ngIf="passenger.hasSelectedSeat"
+            (click)="passenger.clear()"
+          ></a>
         </div>
       </div>
 

@@ -12,6 +12,10 @@ export class Passenger {
   public selectedSeat: Seat;
   public isActive = false;
 
+  public get hasSelectedSeat() {
+    return !!this.selectedSeat;
+  }
+
   public selectSeat(seat: Seat) {
     this.selectedSeat = seat;
   }
@@ -33,11 +37,11 @@ export class PassengersRepository {
   private _passengers: Passenger[] = [];
 
   public get hasSelectedSeats() {
-    return this._passengers.some(passenger => !!passenger.selectedSeat);
+    return this._passengers.some(passenger => passenger.hasSelectedSeat);
   }
 
   private get hasPassengerWithoutSeat() {
-    return this._passengers.some(passenger => !passenger.selectedSeat);
+    return this._passengers.some(passenger => !passenger.hasSelectedSeat);
   }
 
   public generatePassengersByAdultCount(adultCount: number) {
