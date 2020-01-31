@@ -1,14 +1,14 @@
-@import "../../../../style/theme.less";
+@import "../../../../../style/theme.less";
 
-.seat {
-  &__title {
-    font-size: 18px;
+.passenger {
+  margin-top: 25px;
+
+  &__header {
+    font-size: 16px;
     position: relative;
-    border-left: 4px solid @primary-color;
-    margin-top: 20px;
     border-radius: 3px;
-    padding: 10px 15px;
-    background-color: @primary-transparent-color;
+    padding: 10px 0;
+    display: flex;
     cursor: pointer;
 
     &::after {
@@ -16,7 +16,7 @@
       position: absolute;
       transform: rotate(-45deg);
       transition: transform 0.25s linear;
-      top: 15px;
+      top: 20px;
       right: 16px;
       width: 10px;
       height: 10px;
@@ -34,8 +34,15 @@
     }
   }
 
-  &__container {
+  &__number {
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
+    margin-right: 10px;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: @white;
+    background-color: @background-color;
   }
 }

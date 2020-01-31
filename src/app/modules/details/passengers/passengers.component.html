@@ -1,0 +1,7 @@
+<div class="passengers">
+  <app-passenger
+    *ngFor="let passenger of passengers$ | async"
+    [ticket]="ticket"
+    [passenger]="passenger"
+  ></app-passenger>
+</div>

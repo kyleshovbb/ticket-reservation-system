@@ -1,11 +1,13 @@
-import { Input, Output, OnInit, OnDestroy, Component, EventEmitter, ChangeDetectionStrategy } from "@angular/core";
+import { Input, OnInit, OnDestroy, Component, ChangeDetectionStrategy } from "@angular/core";
 import { Subscription } from "rxjs";
+import { startWith } from "rxjs/operators";
 
 import { Transfer } from "src/app/core/models/tickets.model";
 import { Characteristic, SeatLocation, Seat, SeatsMap, Legends } from "src/app/core/models/seats-map.model";
 
+import { SeatPrice } from "./seats-map.models";
+import { Passenger } from "../../../passengers.model";
 import { SeatsMapService } from "./seats-map.service";
-import { SeatPrice, PassengersRepository } from "./seats-map.models";
 
 @Component({
   selector: "app-seats-map",
@@ -14,16 +16,14 @@ import { SeatPrice, PassengersRepository } from "./seats-map.models";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SeatsMapComponent implements OnInit, OnDestroy {
-  @Input() adult: number;
   @Input() transfer: Transfer;
-  @Output() selectSeats = new EventEmitter<Seat[]>();
-
-  public passengersRepository = new PassengersRepository();
+  @Input() passenger: Passenger;
 
   public isActive = false;
 
   public seatsMap: SeatsMap;
   public seatPrices: SeatPrice[];
+  public selectedSeat: Seat;
 
   public seatLocation = SeatLocation;
   public characteristic = Characteristic;
@@ -32,12 +32,14 @@ export class SeatsMapComponent implements OnInit, OnDestroy {
 
   private defaultLegends: SeatPrice[] = [{ name: "occupied" }, { name: "selected" }];
 
+  public get isSelectedSeat() {
+    return !!this.selectedSeat;
+  }
+
   constructor(private seatsMapService: SeatsMapService) {}
 
   ngOnInit(): void {
-    this.passengersRepository.generatePassengersByAdultCount(this.adult);
-
-    this.subs.add(this.subscribeToSeatsMap());
+    this.subs.add(this.subscribeToSeatsMap()).add(this.subscribeToSelectSeat());
 
     const plane = this.getPlaneNameByTransfer(this.transfer);
     this.seatsMapService.loadSeatsMap(plane).subscribe();
@@ -51,10 +53,9 @@ export class SeatsMapComponent implements OnInit, OnDestroy {
     this.isActive = !this.isActive;
   }
 
-  public onToggleSeat(seat: Seat) {
-    this.passengersRepository.toggleSeat(seat);
-    const seats = this.passengersRepository.getAllSeats();
-    this.selectSeats.emit(seats);
+  public onSelectSeat(seat: Seat) {
+    this.selectedSeat = seat;
+    this.passenger.selectSeat(seat);
   }
 
   private getPlaneNameByTransfer(transfer: Transfer) {
@@ -65,6 +66,12 @@ export class SeatsMapComponent implements OnInit, OnDestroy {
     return this.seatsMapService.seatsMap$.subscribe(seatsMap => {
       this.seatsMap = seatsMap;
       this.saveLegends(seatsMap.legends);
+    });
+  }
+
+  private subscribeToSelectSeat() {
+    return this.passenger.selectedSeat$.pipe(startWith(this.passenger.selectedSeat)).subscribe(selectedSeat => {
+      this.selectedSeat = selectedSeat;
     });
   }
 

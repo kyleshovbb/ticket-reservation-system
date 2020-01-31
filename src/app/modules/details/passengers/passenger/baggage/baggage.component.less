@@ -1,36 +1,14 @@
-@import "../../../../style/theme.less";
+@import "../../../../../../style/theme.less";
 
 .baggage {
+  margin-top: 30px;
+
   &__title {
     font-size: 18px;
     position: relative;
     border-left: 4px solid @primary-color;
     border-radius: 3px;
     padding: 10px 15px;
-    background-color: @primary-transparent-color;
-    cursor: pointer;
-
-    &::after {
-      content: "";
-      position: absolute;
-      transform: rotate(-45deg);
-      transition: transform 0.25s linear;
-      top: 15px;
-      right: 16px;
-      width: 10px;
-      height: 10px;
-      border-width: 3px 3px 0 0;
-      border-style: solid;
-      border-color: @primary-color;
-      display: block;
-    }
-
-    &_open {
-      &::after {
-        transform: rotate(135deg);
-        transition: transform 0.25s linear;
-      }
-    }
   }
 
   &__container {

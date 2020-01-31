@@ -1,16 +1,16 @@
 <div class="baggage">
-  <h2 class="baggage__title" [ngClass]="{ baggage__title_open: isOpen }" (click)="toggle()">
+  <h2 class="baggage__title">
     Add baggage
   </h2>
 
-  <div class="baggage__container" *ngIf="isOpen">
+  <div class="baggage__container">
     <div class="baggage__info-container">
-      <div class="baggage__info" *ngFor="let baggage of baggages; let i = index">
+      <div class="baggage__info" *ngFor="let baggage of passenger.baggages$ | async; let i = index">
         <div class="baggage__name">{{ baggage.name }}</div>
         <div class="baggage__description">{{ baggage.description }}</div>
         <div class="baggage__price">{{ baggage.price === 0 ? "Free" : (baggage.price | currency: "USD") }}</div>
         <div class="baggage__action">
-          <a class="baggage__delete-btn close" *ngIf="baggage.isNotStatic" (click)="removeBaggage(i)"></a>
+          <a class="baggage__delete-btn close" *ngIf="!baggage.isStatic" (click)="removeBaggage(i)"></a>
         </div>
       </div>
     </div>

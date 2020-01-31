@@ -1,8 +1,5 @@
 <div class="details">
   <h1 class="details__title">{{ "Order Details" }}</h1>
 
-  <ng-container *ngIf="ticketDetails$ | async as ticketDetails">
-    <app-booking-details-baggage [(baggages)]="baggages"></app-booking-details-baggage>
-    <app-booking-details-seat [ticket]="ticketDetails"></app-booking-details-seat>
-  </ng-container>
+  <app-passengers *ngIf="ticketDetails$ | async as ticketDetails" [ticket]="ticketDetails"></app-passengers>
 </div>

@@ -71,6 +71,26 @@ export class FakeBackendService {
     );
   }
 
+  public occupySeat(body: LoginRequest) {
+    const user = this.usersRepository.authentication(body);
+
+    return !!user
+      ? of(
+          new HttpResponse({
+            status: 201,
+            body: user
+          })
+        )
+      : throwError(
+          new HttpResponse({
+            status: 422,
+            body: {
+              message: "Bad credentials"
+            }
+          })
+        );
+  }
+
   public login(body: LoginRequest) {
     const user = this.usersRepository.authentication(body);
 

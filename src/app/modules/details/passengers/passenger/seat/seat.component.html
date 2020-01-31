@@ -1,0 +1,9 @@
+<div class="seat">
+  <h2 class="seat__title">
+    Seat selection
+  </h2>
+
+  <div class="seat__container">
+    <app-seats-map *ngFor="let transfer of allTransfers" [passenger]="passenger" [transfer]="transfer"></app-seats-map>
+  </div>
+</div>

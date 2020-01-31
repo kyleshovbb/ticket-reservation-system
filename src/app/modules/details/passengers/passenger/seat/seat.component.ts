@@ -1,29 +1,25 @@
 import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
 
 import { Seat } from "src/app/core/models/seats-map.model";
-import { Ticket, Transfer } from "src/app/core/models/tickets.model";
+import { TravelRoute, Transfer } from "src/app/core/models/tickets.model";
+
+import { Passenger } from "../../passengers.model";
 
 @Component({
-  selector: "app-booking-details-seat",
+  selector: "app-passenger-seat",
   templateUrl: "./seat.component.html",
   styleUrls: ["./seat.component.less"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SeatComponent {
-  @Input() ticket: Ticket;
-
-  public selectedSeat: Seat;
-  public isOpen = false;
-
-  public toggle() {
-    this.isOpen = !this.isOpen;
-  }
+  @Input() routes: TravelRoute[];
+  @Input() passenger: Passenger;
 
   public selectSeat(seat: Seat) {
-    this.selectedSeat = seat;
+    this.passenger.selectSeat(seat);
   }
 
   public get allTransfers(): Transfer[] {
-    return this.ticket.routes.reduce((transfers, route) => [...transfers, ...route.transfers], []);
+    return this.routes.reduce((transfers, route) => [...transfers, ...route.transfers], []);
   }
 }

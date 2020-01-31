@@ -1,0 +1,12 @@
+<div class="passenger">
+  <div class="passenger__header" [ngClass]="{ passenger__header_open: isOpen }" (click)="toggle()">
+    <span class="passenger__number">{{ passenger.number }}</span>
+    <h2 class="passenger__passenger-type">ADULT</h2>
+  </div>
+
+  <ng-container *ngIf="isOpen">
+    <app-passenger-personal-information [passenger]="passenger"></app-passenger-personal-information>
+    <app-passenger-baggage [passenger]="passenger"></app-passenger-baggage>
+    <app-passenger-seat [passenger]="passenger" [routes]="ticket.routes"></app-passenger-seat>
+  </ng-container>
+</div>

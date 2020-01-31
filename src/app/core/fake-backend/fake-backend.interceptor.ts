@@ -20,6 +20,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     switch (true) {
       case url.endsWith("check-auth") && method === "GET":
         return this.fakeBackendService.checkUser();
+      case url.endsWith("logout") && method === "GET":
+        return this.fakeBackendService.logout();
+      case url.endsWith("login") && method === "POST":
+        return this.fakeBackendService.login(body);
+      case url.endsWith("register") && method === "POST":
+        return this.fakeBackendService.register(body);
       case url.endsWith("flights/create-session") && method === "GET":
         return this.fakeBackendService.getTickets(params);
       case url.includes("flights/book") && method === "GET":
@@ -28,12 +34,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       case url.includes("flights/seat-map") && method === "GET":
         const plane = splitUrl[splitUrl.length - 1];
         return this.fakeBackendService.getSeatMap(plane);
-      case url.endsWith("logout") && method === "GET":
-        return this.fakeBackendService.logout();
-      case url.endsWith("login") && method === "POST":
-        return this.fakeBackendService.login(body);
-      case url.endsWith("register") && method === "POST":
-        return this.fakeBackendService.register(body);
+      case url.endsWith("flights/occupy-seat") && method === "POST":
+        return this.fakeBackendService.occupySeat(body);
       default:
         return next.handle(req);
     }

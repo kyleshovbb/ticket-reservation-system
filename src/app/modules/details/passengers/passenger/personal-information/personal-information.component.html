@@ -1,0 +1,17 @@
+<div class="personal-information">
+  <h2 class="personal-information__title">
+    Personal information
+  </h2>
+
+  <div class="personal-information__container">
+    <form [formGroup]="personalInformationForm">
+      <app-input placeholder="First Name" formControlName="firstName"></app-input>
+      <app-input placeholder="Last Name" formControlName="lastName"></app-input>
+      <app-input placeholder="Date of Birth" formControlName="dateOfBirth"></app-input>
+      <app-input placeholder="Gender" formControlName="gender"></app-input>
+      <app-input placeholder="Nationality" formControlName="nationality"></app-input>
+      <app-input placeholder="Passport or ID Number" formControlName="documentNumber"></app-input>
+      <app-input placeholder="Expiration Date" formControlName="expirationDate"></app-input>
+    </form>
+  </div>
+</div>
