@@ -1,5 +1,5 @@
 export interface SeatsMap {
-  plane: string;
+  transferId: string;
   columns: Column[];
   rows: Row[];
   legends: Legends;

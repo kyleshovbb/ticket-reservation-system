@@ -27,6 +27,7 @@ export interface TravelRoute {
 }
 
 export interface Transfer {
+  id: string;
   airline: string;
   planeNum: [string, number];
   departDate: string;

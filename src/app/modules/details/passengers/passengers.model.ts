@@ -26,9 +26,15 @@ export interface Baggage {
   isStatic: boolean;
 }
 
+export interface TransferSeat {
+  ticketId: string;
+  transferId: string;
+  seat: Seat;
+}
+
 export class Passenger {
   private personalInformationSubject = new BehaviorSubject<PersonalInformation>(null);
-  private selectedSeatSubject = new BehaviorSubject<Seat>(null);
+  private selectedSeatsSubject = new BehaviorSubject<TransferSeat[]>([]);
   private baggagesSubject = new BehaviorSubject<Baggage[]>([
     {
       type: BaggageType.Default,
@@ -53,12 +59,12 @@ export class Passenger {
     return this.personalInformationSubject.asObservable();
   }
 
-  public get selectedSeat() {
-    return this.selectedSeatSubject.getValue();
+  public get selectedSeats() {
+    return this.selectedSeatsSubject.getValue();
   }
 
-  public get selectedSeat$() {
-    return this.selectedSeatSubject.asObservable();
+  public get selectedSeats$() {
+    return this.selectedSeatsSubject.asObservable();
   }
 
   public changePersonalInformation(personalInformation: PersonalInformation) {
@@ -76,12 +82,43 @@ export class Passenger {
     this.baggagesSubject.next(baggages);
   }
 
-  public selectSeat(seat: Seat) {
-    this.selectedSeatSubject.next(seat);
+  public selectSeat(seat: Seat, ticketId: string, transferId: string) {
+    const transferSeat: TransferSeat = {
+      ticketId,
+      transferId,
+      seat
+    };
+
+    this.saveSelectedSeat(transferSeat);
   }
 
-  public clearSeat() {
-    this.selectedSeatSubject.next(null);
+  public getSeatedSeatByTransferId(transferId: string): Seat {
+    const transferSeat = this.selectedSeats.find(transferSeat => transferSeat.transferId === transferId);
+    return transferSeat.seat;
+  }
+
+  public clearSeat(transferId: string) {
+    const selectedSeats = this.selectedSeats.slice();
+    const previousSeatIndex = selectedSeats.findIndex(selectedSeat => selectedSeat.transferId === transferId);
+
+    if (previousSeatIndex !== -1) {
+      selectedSeats.splice(previousSeatIndex, 1);
+    }
+
+    this.selectedSeatsSubject.next(selectedSeats);
+  }
+
+  private saveSelectedSeat(transferSeat: TransferSeat) {
+    const selectedSeats = this.selectedSeats.slice();
+    const previousSeatIndex = selectedSeats.findIndex(
+      selectedSeat => selectedSeat.transferId === transferSeat.transferId
+    );
+
+    if (previousSeatIndex !== -1) {
+      selectedSeats.splice(previousSeatIndex, 1);
+    }
+
+    this.selectedSeatsSubject.next([...selectedSeats, transferSeat]);
   }
 
   private getBaggageByType(baggageType: BaggageType): Baggage {

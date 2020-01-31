@@ -28,6 +28,6 @@ import { PersonalInformationComponent } from "./passengers/passenger/personal-in
     PersonalInformationComponent
   ],
   imports: [DetailsRoutingModule, CommonModule, SharedModule],
-  providers: [DetailsService, SeatsMapService, PassengersService]
+  providers: [DetailsService, PassengersService]
 })
 export class DetailsModule {}

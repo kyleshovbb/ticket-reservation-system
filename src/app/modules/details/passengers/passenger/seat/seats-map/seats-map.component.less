@@ -46,18 +46,9 @@
     padding: 10px 15px;
     position: relative;
     box-sizing: border-box;
-    cursor: pointer;
-
-    &_active {
-      cursor: auto;
-      color: @white;
-      background-color: @primary-color;
-    }
-
-    &:not(.seats-map__passenger_active):hover {
-      color: @dark-text-color;
-      background-color: @primary-transparent-color;
-    }
+    color: @white;
+    background-color: @primary-color;
+    cursor: auto;
   }
 
   &__close-selected-seat {
@@ -152,7 +143,7 @@
     border-radius: 3px;
     background-color: @white;
 
-    &:hover {
+    &:not(.seats-map__seat-status_occupied):hover {
       color: @white;
       background-color: @background-color;
     }
@@ -167,11 +158,6 @@
       color: @white;
       background-color: @exit-background-color;
     }
-
-    &_selected {
-      color: @white;
-      background-color: @primary-color;
-    }
   }
 
   &__seat-status {
@@ -180,6 +166,11 @@
       color: @white;
       border-color: @disable-darken-color;
       background-color: @disable-darken-color;
+    }
+
+    &_selected {
+      color: @white;
+      background-color: @primary-color;
     }
   }
 

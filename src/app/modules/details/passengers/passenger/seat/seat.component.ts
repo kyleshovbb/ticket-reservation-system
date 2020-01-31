@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
 
 import { Seat } from "src/app/core/models/seats-map.model";
-import { TravelRoute, Transfer } from "src/app/core/models/tickets.model";
+import { Transfer, Ticket } from "src/app/core/models/tickets.model";
 
 import { Passenger } from "../../passengers.model";
 
@@ -12,14 +12,14 @@ import { Passenger } from "../../passengers.model";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SeatComponent {
-  @Input() routes: TravelRoute[];
+  @Input() ticket: Ticket;
   @Input() passenger: Passenger;
 
-  public selectSeat(seat: Seat) {
-    this.passenger.selectSeat(seat);
+  public selectSeat(seat: Seat, ticketId: string, transferId: string) {
+    this.passenger.selectSeat(seat, ticketId, transferId);
   }
 
   public get allTransfers(): Transfer[] {
-    return this.routes.reduce((transfers, route) => [...transfers, ...route.transfers], []);
+    return this.ticket.routes.reduce((transfers, route) => [...transfers, ...route.transfers], []);
   }
 }

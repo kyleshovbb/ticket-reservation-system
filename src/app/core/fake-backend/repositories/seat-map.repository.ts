@@ -17,23 +17,23 @@ enum SeatMapStorageKeys {
 export class SeatMapRepository {
   private _seatsMaps: SeatsMap[] = JSON.parse(localStorage.getItem(SeatMapStorageKeys.SeatMap)) || [];
 
-  public getOne(plane: string): SeatsMap {
-    const seatMap = this._seatsMaps.find(seatMap => seatMap.plane === plane);
+  public getOne(transferId: string): SeatsMap {
+    const seatMap = this._seatsMaps.find(seatMap => seatMap.transferId === transferId);
 
     if (seatMap) {
       return seatMap;
     } else {
-      const newSeatMap = this.getNewSeatMap(plane);
+      const newSeatMap = this.getNewSeatMap(transferId);
       this.saveSeatsMap(newSeatMap);
       return newSeatMap;
     }
   }
 
-  private getNewSeatMap(plane: string): SeatsMap {
+  private getNewSeatMap(transferId: string): SeatsMap {
     const columns = this.getColumns();
 
     return {
-      plane,
+      transferId,
       columns,
       rows: this.getRows(columns),
       legends: this.getLegends()

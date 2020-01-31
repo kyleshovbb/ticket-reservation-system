@@ -1,4 +1,4 @@
-import { Input, OnInit, OnDestroy, Component, ChangeDetectionStrategy } from "@angular/core";
+import { Input, OnInit, OnDestroy, Component, ChangeDetectionStrategy, Output, EventEmitter } from "@angular/core";
 import { Subscription } from "rxjs";
 import { startWith } from "rxjs/operators";
 
@@ -13,11 +13,13 @@ import { SeatsMapService } from "./seats-map.service";
   selector: "app-seats-map",
   templateUrl: "./seats-map.component.html",
   styleUrls: ["./seats-map.component.less"],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [SeatsMapService]
 })
 export class SeatsMapComponent implements OnInit, OnDestroy {
   @Input() transfer: Transfer;
   @Input() passenger: Passenger;
+  @Output() selectSeat = new EventEmitter<Seat>();
 
   public isActive = false;
 
@@ -41,25 +43,21 @@ export class SeatsMapComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subs.add(this.subscribeToSeatsMap()).add(this.subscribeToSelectSeat());
 
-    const plane = this.getPlaneNameByTransfer(this.transfer);
-    this.seatsMapService.loadSeatsMap(plane).subscribe();
+    this.seatsMapService.loadSeatsMap(this.transfer.id).subscribe();
   }
 
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
 
-  public toggle() {
+  public onToggle() {
     this.isActive = !this.isActive;
   }
 
   public onSelectSeat(seat: Seat) {
-    this.selectedSeat = seat;
-    this.passenger.selectSeat(seat);
-  }
-
-  private getPlaneNameByTransfer(transfer: Transfer) {
-    return `${transfer.planeNum[0]} - ${transfer.planeNum[1]}`;
+    if (!seat.isOccupied) {
+      this.selectSeat.emit(seat);
+    }
   }
 
   private subscribeToSeatsMap() {
@@ -70,8 +68,10 @@ export class SeatsMapComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToSelectSeat() {
-    return this.passenger.selectedSeat$.pipe(startWith(this.passenger.selectedSeat)).subscribe(selectedSeat => {
-      this.selectedSeat = selectedSeat;
+    return this.passenger.selectedSeats$.pipe(startWith(this.passenger.selectedSeats)).subscribe(selectedSeats => {
+      const transferSeat = selectedSeats.find(selectedSeat => selectedSeat.transferId === this.transfer.id);
+
+      this.selectedSeat = transferSeat ? transferSeat.seat : null;
     });
   }
 

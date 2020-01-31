@@ -70,6 +70,7 @@ export class TicketsRepository {
       const [code, airlineName] = this.getRandomAirline();
 
       return {
+        id: random.uuid(),
         airline: airlineName,
         planeNum: [code, random.number({ min: 1000, max: 9999 })],
         departDate,
@@ -93,6 +94,7 @@ export class TicketsRepository {
       const [code, airlineName] = this.getRandomAirline();
 
       return {
+        id: random.uuid(),
         airline: airlineName,
         planeNum: [code, random.number({ min: 1000, max: 9999 })],
         departDate,
