@@ -3,15 +3,13 @@
     Personal information
   </h2>
 
-  <div class="personal-information__container">
-    <form [formGroup]="personalInformationForm">
-      <app-input placeholder="First Name" formControlName="firstName"></app-input>
-      <app-input placeholder="Last Name" formControlName="lastName"></app-input>
-      <app-date-picker formControlName="dateOfBirth"></app-date-picker>
-      <app-select placeholder="Gender" formControlName="gender" [options]="genderOptions"></app-select>
-      <app-input placeholder="Nationality" formControlName="nationality"></app-input>
-      <app-input placeholder="Passport or ID Number" formControlName="documentNumber"></app-input>
-      <app-date-picker formControlName="expirationDate"></app-date-picker>
-    </form>
-  </div>
+  <form class="personal-information__form" [formGroup]="personalInformationForm">
+    <app-input placeholder="First Name" formControlName="firstName"></app-input>
+    <app-input placeholder="Last Name" formControlName="lastName"></app-input>
+    <app-date-picker formControlName="dateOfBirth"></app-date-picker>
+    <app-select placeholder="Gender" formControlName="gender" [options]="genderOptions"></app-select>
+    <app-input placeholder="Nationality" formControlName="nationality"></app-input>
+    <app-input placeholder="Passport or ID Number" formControlName="documentNumber"></app-input>
+    <app-date-picker formControlName="expirationDate"></app-date-picker>
+  </form>
 </div>

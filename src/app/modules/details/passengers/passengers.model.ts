@@ -55,6 +55,10 @@ export class Passenger {
     return this.baggagesSubject.asObservable();
   }
 
+  public get personalInformation() {
+    return this.personalInformationSubject.getValue();
+  }
+
   public get personalInformation$() {
     return this.personalInformationSubject.asObservable();
   }
@@ -65,6 +69,10 @@ export class Passenger {
 
   public get selectedSeats$() {
     return this.selectedSeatsSubject.asObservable();
+  }
+
+  public isValidPersonalData() {
+    return this.personalInformation && Object.values(this.personalInformation).every(value => !!value);
   }
 
   public changePersonalInformation(personalInformation: PersonalInformation) {
