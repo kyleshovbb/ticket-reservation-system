@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
+import { Option } from "src/app/shared/models/form.model";
+
 import { Passenger } from "../../passengers.model";
 
 @Component({
@@ -12,6 +14,17 @@ import { Passenger } from "../../passengers.model";
 })
 export class PersonalInformationComponent implements OnInit, OnDestroy {
   @Input() passenger: Passenger;
+
+  public genderOptions: Option[] = [
+    {
+      value: "male",
+      label: "Male"
+    },
+    {
+      value: "female",
+      label: "Female"
+    }
+  ];
 
   public personalInformationForm: FormGroup;
 

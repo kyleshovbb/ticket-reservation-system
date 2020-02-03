@@ -1,0 +1,13 @@
+<div class="select">
+  <select
+    class="select__field"
+    [ngModel]="value"
+    [ngClass]="{ select__error: !!error }"
+    (ngModelChange)="onChange($event)"
+  >
+    <option class="select__placeholder" disabled selected hidden value="">{{ placeholder }}</option>
+    <option class="select__option" *ngFor="let option of options" [value]="option.value">{{ option.label }}</option>
+  </select>
+
+  <div class="select__error-tip" *ngIf="error">{{ error }}</div>
+</div>

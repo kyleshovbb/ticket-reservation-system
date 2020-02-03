@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ValidatorService } from "./services/validator.service";
 import { RadioComponent } from "./components/radio/radio.component";
 import { InputComponent } from "./components/input/input.component";
+import { SelectComponent } from "./components/select/select.component";
 import { RadioGroupComponent } from "./components/radio/radio-group.component";
 import { DatePickerComponent } from "./components/date-picker/date-picker.component";
 import { InputNumberComponent } from "./components/input-number/input-number.component";
@@ -14,6 +15,7 @@ import { AutocompleteComponent } from "./components/autocomplete/autocomplete.co
   declarations: [
     InputComponent,
     RadioComponent,
+    SelectComponent,
     DatePickerComponent,
     RadioGroupComponent,
     InputNumberComponent,
@@ -22,8 +24,9 @@ import { AutocompleteComponent } from "./components/autocomplete/autocomplete.co
   imports: [CommonModule, FormsModule],
   exports: [
     FormsModule,
-    ReactiveFormsModule,
     InputComponent,
+    SelectComponent,
+    ReactiveFormsModule,
     DatePickerComponent,
     RadioGroupComponent,
     InputNumberComponent,
