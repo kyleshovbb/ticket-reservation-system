@@ -4,7 +4,6 @@ import { CommonModule } from "@angular/common";
 import { SharedModule } from "src/app/shared/shared.module";
 
 import { DetailsService } from "./details.service";
-import { SeatsMapService } from "./passengers/passenger/seat/seats-map/seats-map.service";
 import { PassengersService } from "./passengers/passengers.service";
 
 import { DetailsRoutingModule } from "./details-routing.module";

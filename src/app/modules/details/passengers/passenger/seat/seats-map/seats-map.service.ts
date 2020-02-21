@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { of, Observable, ReplaySubject } from "rxjs";
 import { tap, catchError } from "rxjs/operators";
 
-import { SeatsMap } from "src/app/core/models/seats-map.model";
+import { SeatsMap, ReserveSeatRequest } from "src/app/core/models/seats-map.model";
 
 @Injectable()
 export class SeatsMapService {
@@ -14,6 +14,10 @@ export class SeatsMapService {
   }
 
   constructor(private http: HttpClient) {}
+
+  public reserveSeat(payload: ReserveSeatRequest) {
+    return this.http.post("flights/reserve-seat", payload);
+  }
 
   public loadSeatsMap(transferId: string) {
     return this.fetchSeatsMap(transferId).pipe(

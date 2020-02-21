@@ -90,14 +90,17 @@ export class Passenger {
     this.baggagesSubject.next(baggages);
   }
 
-  public selectSeat(seat: Seat, ticketId: string, transferId: string) {
-    const transferSeat: TransferSeat = {
-      ticketId,
-      transferId,
-      seat
-    };
+  public selectSeat(transferSeat: TransferSeat) {
+    const selectedSeats = this.selectedSeats.slice();
+    const previousSeatIndex = selectedSeats.findIndex(
+      selectedSeat => selectedSeat.transferId === transferSeat.transferId
+    );
 
-    this.saveSelectedSeat(transferSeat);
+    if (previousSeatIndex !== -1) {
+      selectedSeats.splice(previousSeatIndex, 1);
+    }
+
+    this.selectedSeatsSubject.next([...selectedSeats, transferSeat]);
   }
 
   public getSeatedSeatByTransferId(transferId: string): Seat {
@@ -114,19 +117,6 @@ export class Passenger {
     }
 
     this.selectedSeatsSubject.next(selectedSeats);
-  }
-
-  private saveSelectedSeat(transferSeat: TransferSeat) {
-    const selectedSeats = this.selectedSeats.slice();
-    const previousSeatIndex = selectedSeats.findIndex(
-      selectedSeat => selectedSeat.transferId === transferSeat.transferId
-    );
-
-    if (previousSeatIndex !== -1) {
-      selectedSeats.splice(previousSeatIndex, 1);
-    }
-
-    this.selectedSeatsSubject.next([...selectedSeats, transferSeat]);
   }
 
   private getBaggageByType(baggageType: BaggageType): Baggage {

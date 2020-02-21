@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
+import { CoreModule } from "src/app/core/core.module";
 import { SharedModule } from "src/app/shared/shared.module";
 
 import { SearchService } from "./search/search.service";
@@ -12,7 +13,7 @@ import { TravelRouteComponent } from "./travel-route/travel-route.component";
 
 @NgModule({
   declarations: [SearchComponent, BookingComponent, TravelRouteComponent],
-  imports: [CommonModule, BookingRoutingModule, SharedModule],
+  imports: [CommonModule, BookingRoutingModule, SharedModule, CoreModule],
   providers: [BookingService, SearchService]
 })
 export class BookingModule {}

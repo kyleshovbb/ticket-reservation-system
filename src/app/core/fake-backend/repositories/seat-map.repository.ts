@@ -7,26 +7,72 @@ import {
   Legends,
   SeatsMap,
   SeatLocation,
-  Characteristic
+  Characteristic,
+  ReserveSeatRequest
 } from "src/app/core/models/seats-map.model";
 
+import { ReservedSeat } from "../models/seat-map.model";
+
 enum SeatMapStorageKeys {
-  SeatMap = "seat-map"
+  SeatMap = "seat-map",
+  ReservedSeat = "reserved-seat"
 }
 
 export class SeatMapRepository {
+  private _reservedSeats: ReservedSeat[] = JSON.parse(localStorage.getItem(SeatMapStorageKeys.ReservedSeat)) || [];
   private _seatsMaps: SeatsMap[] = JSON.parse(localStorage.getItem(SeatMapStorageKeys.SeatMap)) || [];
+
+  public reserveSeat(payload: ReserveSeatRequest) {
+    const reservedSeat: ReservedSeat = {
+      ...payload,
+      time: new Date().toISOString()
+    };
+
+    this._reservedSeats.push(reservedSeat);
+    localStorage.setItem(SeatMapStorageKeys.ReservedSeat, JSON.stringify(this._reservedSeats));
+  }
 
   public getOne(transferId: string): SeatsMap {
     const seatMap = this._seatsMaps.find(seatMap => seatMap.transferId === transferId);
 
     if (seatMap) {
-      return seatMap;
+      this.resetReservedSeatAfterTimeout();
+      return this.getReservedSeatsMap(seatMap);
     } else {
       const newSeatMap = this.getNewSeatMap(transferId);
       this.saveSeatsMap(newSeatMap);
       return newSeatMap;
     }
+  }
+
+  private getReservedSeatsMap(seatsMap: SeatsMap) {
+    return {
+      ...seatsMap,
+      rows: seatsMap.rows.map(row => ({
+        ...row,
+        seats: row.seats.map(seat => ({
+          ...seat,
+          isOccupied:
+            seat.isOccupied || this._reservedSeats.some(reservedSeat => reservedSeat.seat.number === seat.number)
+        }))
+      }))
+    };
+  }
+
+  private resetReservedSeatAfterTimeout() {
+    this._reservedSeats = this.getFilteredReservedSeatsByTimer();
+    localStorage.setItem(SeatMapStorageKeys.ReservedSeat, JSON.stringify(this._reservedSeats));
+  }
+
+  private getFilteredReservedSeatsByTimer() {
+    const now = new Date();
+    const fifteenMinutes = 900000;
+
+    return this._reservedSeats.filter(reservedSeat => {
+      const reservedTime = new Date(reservedSeat.time);
+      const duration = now.getMilliseconds() - reservedTime.getMilliseconds();
+      return duration < fifteenMinutes;
+    });
   }
 
   private getNewSeatMap(transferId: string): SeatsMap {

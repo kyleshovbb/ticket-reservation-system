@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
-import { AuthService } from "src/app/core/services/auth.service";
+import { AuthApiService } from "src/app/core/services/auth-api.service";
 
 import { AuthModalService } from "../auth-modal.service";
 
@@ -16,7 +16,7 @@ export class RegistrationComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
+    private authService: AuthApiService,
     private authModalService: AuthModalService
   ) {
     this.registrationForm = this.fb.group({
@@ -27,10 +27,8 @@ export class RegistrationComponent {
   }
 
   public onSubmit() {
-    return this.authService
-      .register(this.registrationForm.value)
-      .subscribe(() => {
-        this.authModalService.close();
-      });
+    return this.authService.register(this.registrationForm.value).subscribe(() => {
+      this.authModalService.close();
+    });
   }
 }

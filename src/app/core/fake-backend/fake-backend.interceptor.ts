@@ -34,8 +34,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       case url.includes("flights/seat-map") && method === "GET":
         const plane = splitUrl[splitUrl.length - 1];
         return this.fakeBackendService.getSeatMap(plane);
-      case url.endsWith("flights/occupy-seat") && method === "POST":
-        return this.fakeBackendService.occupySeat(body);
+      case url.endsWith("flights/reserve-seat") && method === "POST":
+        return this.fakeBackendService.reserveSeat(body);
       default:
         return next.handle(req);
     }

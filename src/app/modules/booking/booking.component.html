@@ -8,7 +8,7 @@
 
     <div class="booking__ticket-book-container">
       <div class="booking__ticket-price">{{ ticket.price | currency: ticket.currency }}</div>
-      <a class="booking__book-btn btn btn-primary" [routerLink]="['/details', ticket.id]">Book</a>
+      <a class="booking__book-btn btn btn-primary" [appAuthLink]="['/details', ticket.id]">Book</a>
     </div>
   </div>
 </div>

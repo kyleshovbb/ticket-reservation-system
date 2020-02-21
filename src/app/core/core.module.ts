@@ -2,14 +2,19 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgModule, ModuleWithProviders } from "@angular/core";
 
 import { AuthGuard } from "./guards/auth.guard";
-import { AuthService } from "./services/auth.service";
+import { AuthLinkDirective } from "./directives/auth-link.directive";
+
+import { AuthApiService } from "./services/auth-api.service";
 import { UserService } from "./services/user.service";
 import { FakeBackendService } from "./fake-backend/fake-backend.service";
 
 import { FakeBackendInterceptor } from "./fake-backend/fake-backend.interceptor";
 import { AirportsFinderInterceptor } from "./interceptors/airports-finder.interceptor";
 
-@NgModule()
+@NgModule({
+  declarations: [AuthLinkDirective],
+  exports: [AuthLinkDirective]
+})
 export class CoreModule {
   static forRoot(): ModuleWithProviders {
     return {
@@ -17,7 +22,7 @@ export class CoreModule {
       providers: [
         FakeBackendService,
         UserService,
-        AuthService,
+        AuthApiService,
         AuthGuard,
         {
           provide: HTTP_INTERCEPTORS,

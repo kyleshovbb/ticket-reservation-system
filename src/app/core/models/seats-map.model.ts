@@ -44,3 +44,9 @@ export enum Characteristic {
   Front = "front",
   Exit = "exit"
 }
+
+export interface ReserveSeatRequest {
+  seat: Seat;
+  ticketId: string;
+  transferId: string;
+}

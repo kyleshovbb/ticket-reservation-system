@@ -1,4 +1,4 @@
-import { Input, OnInit, OnDestroy, Component, ChangeDetectionStrategy, Output, EventEmitter } from "@angular/core";
+import { Input, OnInit, OnDestroy, Component, ChangeDetectionStrategy } from "@angular/core";
 import { Subscription } from "rxjs";
 import { startWith } from "rxjs/operators";
 
@@ -6,8 +6,8 @@ import { Transfer } from "src/app/core/models/tickets.model";
 import { Characteristic, SeatLocation, Seat, SeatsMap, Legends } from "src/app/core/models/seats-map.model";
 
 import { SeatPrice } from "./seats-map.models";
-import { Passenger } from "../../../passengers.model";
 import { SeatsMapService } from "./seats-map.service";
+import { Passenger, TransferSeat } from "../../../passengers.model";
 
 @Component({
   selector: "app-seats-map",
@@ -17,9 +17,9 @@ import { SeatsMapService } from "./seats-map.service";
   providers: [SeatsMapService]
 })
 export class SeatsMapComponent implements OnInit, OnDestroy {
+  @Input() ticketId: string;
   @Input() transfer: Transfer;
   @Input() passenger: Passenger;
-  @Output() selectSeat = new EventEmitter<Seat>();
 
   public isActive = false;
 
@@ -56,8 +56,18 @@ export class SeatsMapComponent implements OnInit, OnDestroy {
 
   public onSelectSeat(seat: Seat) {
     if (!seat.isOccupied) {
-      this.selectSeat.emit(seat);
+      const transferSeat = this.getTransferSeat(seat);
+      this.passenger.selectSeat(transferSeat);
+      this.seatsMapService.reserveSeat(transferSeat).subscribe();
     }
+  }
+
+  private getTransferSeat(seat: Seat): TransferSeat {
+    return {
+      seat,
+      ticketId: this.ticketId,
+      transferId: this.transfer.id
+    };
   }
 
   private subscribeToSeatsMap() {

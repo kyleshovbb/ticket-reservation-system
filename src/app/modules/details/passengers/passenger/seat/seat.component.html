@@ -6,9 +6,9 @@
   <div class="seat__container">
     <app-seats-map
       *ngFor="let transfer of allTransfers"
-      [passenger]="passenger"
+      [ticketId]="ticket.id"
       [transfer]="transfer"
-      (selectSeat)="selectSeat($event, ticket.id, transfer.id)"
+      [passenger]="passenger"
     ></app-seats-map>
   </div>
 </div>

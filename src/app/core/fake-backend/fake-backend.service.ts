@@ -2,13 +2,13 @@ import { Injectable } from "@angular/core";
 import { HttpResponse, HttpParams } from "@angular/common/http";
 import { of, throwError } from "rxjs";
 
-import { User } from "src/app/core/models/user.model";
 import { TicketsSearch } from "src/app/core/models/tickets.model";
 
-import { LoginRequest } from "../models/auth.model";
+import { LoginRequest, RegistrationRequest } from "../models/auth.model";
 import { UsersRepository } from "./repositories/users.repository";
 import { TicketsRepository } from "./repositories/tickets.repository";
 import { SeatMapRepository } from "./repositories/seat-map.repository";
+import { ReserveSeatRequest } from "../models/seats-map.model";
 
 @Injectable()
 export class FakeBackendService {
@@ -16,7 +16,7 @@ export class FakeBackendService {
   private seatMapRepository = new SeatMapRepository();
   private ticketsRepository = new TicketsRepository();
 
-  public register(user: User) {
+  public register(user: RegistrationRequest) {
     this.usersRepository.createUser(user);
 
     return of(
@@ -27,11 +27,20 @@ export class FakeBackendService {
   }
 
   public checkUser() {
-    return throwError(
-      new HttpResponse({
-        status: 422
-      })
-    );
+    const authorizedUser = this.usersRepository.authorizedUser;
+
+    return authorizedUser
+      ? of(
+          new HttpResponse({
+            status: 201,
+            body: authorizedUser
+          })
+        )
+      : throwError(
+          new HttpResponse({
+            status: 403
+          })
+        );
   }
 
   public logout() {
@@ -71,24 +80,14 @@ export class FakeBackendService {
     );
   }
 
-  public occupySeat(body: LoginRequest) {
-    const user = this.usersRepository.authentication(body);
+  public reserveSeat(payload: ReserveSeatRequest) {
+    this.seatMapRepository.reserveSeat(payload);
 
-    return !!user
-      ? of(
-          new HttpResponse({
-            status: 201,
-            body: user
-          })
-        )
-      : throwError(
-          new HttpResponse({
-            status: 422,
-            body: {
-              message: "Bad credentials"
-            }
-          })
-        );
+    return of(
+      new HttpResponse({
+        status: 201
+      })
+    );
   }
 
   public login(body: LoginRequest) {

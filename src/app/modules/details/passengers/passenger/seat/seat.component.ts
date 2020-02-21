@@ -15,10 +15,6 @@ export class SeatComponent {
   @Input() ticket: Ticket;
   @Input() passenger: Passenger;
 
-  public selectSeat(seat: Seat, ticketId: string, transferId: string) {
-    this.passenger.selectSeat(seat, ticketId, transferId);
-  }
-
   public get allTransfers(): Transfer[] {
     return this.ticket.routes.reduce((transfers, route) => [...transfers, ...route.transfers], []);
   }

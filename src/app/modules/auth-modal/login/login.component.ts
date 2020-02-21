@@ -15,11 +15,7 @@ export class LoginComponent {
   public loginForm: FormGroup;
   public serverError: string;
 
-  constructor(
-    private fb: FormBuilder,
-    private userService: UserService,
-    private authModalService: AuthModalService
-  ) {
+  constructor(private fb: FormBuilder, private userService: UserService, private authModalService: AuthModalService) {
     this.loginForm = this.fb.group({
       username: ["", Validators.required],
       password: ["", Validators.required]
